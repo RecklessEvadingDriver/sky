@@ -1,0 +1,55 @@
+# Shopify Theme - Build Artifacts and Dependencies
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Build output
+dist/
+build/
+.cache/
+
+# Development files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Log files
+*.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Testing
+coverage/
+.nyc_output/
+
+# Theme development tools
+config.yml
+theme.lock
+
+# Backup files
+*.bak
+*.backup
+
+# OS files
+Thumbs.db
+desktop.ini
+
+# Documentation drafts (not final docs)
+drafts/
+notes/

@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "header": {
+      "type": "skystar-header"
+    },
+    "banner": {
+      "type": "skystar-collection-page",
+      "settings": {
+        "show_collection_hero": true,
+        "show_collection_description": true
+      }
+    },
+    "footer": {
+      "type": "skystar-footer"
+    }
+  },
+  "order": [
+    "header",
+    "banner",
+    "footer"
+  ]
+}

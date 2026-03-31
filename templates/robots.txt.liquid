@@ -1,0 +1,31 @@
+User-agent: *
+Disallow: /admin
+Disallow: /cart
+Disallow: /orders
+Disallow: /checkouts/
+Disallow: /checkout
+Disallow: /{{ cart_url }}
+Disallow: /{{ orders_url }}
+Disallow: /{{ account_url }}
+Disallow: /search
+Disallow: /cgi-bin
+Disallow: /account
+Disallow: /collections/*sort_by*
+Disallow: /*/collections/*sort_by*
+Disallow: /collections/*+*
+Disallow: /collections/*%2B*
+Disallow: /collections/*%2b*
+Disallow: /*/collections/*+*
+Disallow: /*/collections/*%2B*
+Disallow: /*/collections/*%2b*
+Disallow: */collections/*filter*&*filter*
+Disallow: /*/collections/*filter*&*filter*
+Disallow: */collections/*sort_by*&*sort_by*
+Disallow: /*/collections/*sort_by*&*sort_by*
+Disallow: /apps/
+
+# Allow all other pages
+Allow: /
+
+# Sitemap location
+Sitemap: {{ shop.url }}/sitemap.xml

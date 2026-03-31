@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "header": {
+      "type": "skystar-header"
+    },
+    "main": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You May Also Like",
+        "products_to_show": 4
+      }
+    },
+    "footer": {
+      "type": "skystar-footer"
+    }
+  },
+  "order": [
+    "header",
+    "main",
+    "product-recommendations",
+    "footer"
+  ]
+}

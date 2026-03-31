@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "header": {
+      "type": "skystar-header"
+    },
+    "error-404": {
+      "type": "skystar-404",
+      "settings": {}
+    },
+    "footer": {
+      "type": "skystar-footer"
+    }
+  },
+  "order": [
+    "header",
+    "error-404",
+    "footer"
+  ]
+}

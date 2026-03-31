@@ -1,0 +1,202 @@
+{% comment %}
+  Skystar Main Page Section
+  Generic page template for content pages like privacy policy, terms, etc.
+{% endcomment %}
+
+<section class="skystar-page-section">
+  <div class="container">
+    <article class="page-content">
+      {% if section.settings.show_title %}
+        <header class="page-header">
+          <h1 class="page-title">{{ page.title }}</h1>
+        </header>
+      {% endif %}
+
+      <div class="page-body rte">
+        {{ page.content }}
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  .skystar-page-section {
+    padding: 60px 20px;
+    min-height: 50vh;
+  }
+
+  .page-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    margin-bottom: 40px;
+    text-align: center;
+    padding-bottom: 30px;
+    border-bottom: 2px solid var(--color-border, #e0e0e0);
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-dark, #1a1a1a);
+    line-height: 1.2;
+  }
+
+  .page-body {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--color-text, #333);
+  }
+
+  /* Rich Text Editor Styles */
+  .rte h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: var(--color-text-dark, #1a1a1a);
+  }
+
+  .rte h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    color: var(--color-text-dark, #1a1a1a);
+  }
+
+  .rte h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 25px;
+    margin-bottom: 12px;
+    color: var(--color-text-dark, #1a1a1a);
+  }
+
+  .rte p {
+    margin-bottom: 20px;
+  }
+
+  .rte ul,
+  .rte ol {
+    margin-bottom: 20px;
+    padding-left: 30px;
+  }
+
+  .rte li {
+    margin-bottom: 10px;
+  }
+
+  .rte a {
+    color: var(--color-primary, #1e3a5f);
+    text-decoration: underline;
+    transition: color 0.3s ease;
+  }
+
+  .rte a:hover {
+    color: var(--color-primary-dark, #152b47);
+  }
+
+  .rte img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 30px 0;
+  }
+
+  .rte blockquote {
+    border-left: 4px solid var(--color-primary, #1e3a5f);
+    padding-left: 20px;
+    margin: 30px 0;
+    font-style: italic;
+    color: var(--color-text-muted, #666);
+  }
+
+  .rte table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+  }
+
+  .rte table th,
+  .rte table td {
+    padding: 12px;
+    border: 1px solid var(--color-border, #e0e0e0);
+    text-align: left;
+  }
+
+  .rte table th {
+    background-color: var(--color-background-secondary, #f5f5f5);
+    font-weight: 600;
+  }
+
+  .rte hr {
+    border: none;
+    border-top: 2px solid var(--color-border, #e0e0e0);
+    margin: 40px 0;
+  }
+
+  .rte code {
+    background-color: var(--color-background-secondary, #f5f5f5);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+
+  .rte pre {
+    background-color: var(--color-background-secondary, #f5f5f5);
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 30px 0;
+  }
+
+  .rte pre code {
+    background-color: transparent;
+    padding: 0;
+  }
+
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 2rem;
+    }
+
+    .page-body {
+      font-size: 1rem;
+    }
+
+    .rte h2 {
+      font-size: 1.5rem;
+    }
+
+    .rte h3 {
+      font-size: 1.25rem;
+    }
+
+    .rte table {
+      font-size: 0.875rem;
+    }
+
+    .rte table th,
+    .rte table td {
+      padding: 8px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Main Page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show Page Title",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
