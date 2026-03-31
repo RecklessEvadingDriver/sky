@@ -1,0 +1,64 @@
+{
+  "sections": {
+    "announcement-bar": {
+      "type": "skystar-announcement-bar",
+      "settings": {
+        "enable_bar": true,
+        "announcement_text": "✈️ Special Offer: Book now and save up to 20% on select packages!",
+        "announcement_link": "/collections/all",
+        "show_dismiss": true
+      }
+    },
+    "header": {
+      "type": "skystar-header"
+    },
+    "hero": {
+      "type": "skystar-hero",
+      "settings": {}
+    },
+    "trust-strip": {
+      "type": "skystar-trust-strip",
+      "settings": {}
+    },
+    "featured-collections": {
+      "type": "skystar-featured-collections",
+      "settings": {}
+    },
+    "popular-packages": {
+      "type": "skystar-popular-packages",
+      "settings": {
+        "heading": "Popular Tour Packages",
+        "source_type": "collection",
+        "collection": "popular-packages",
+        "products_to_show": 6
+      }
+    },
+    "features": {
+      "type": "skystar-features",
+      "settings": {}
+    },
+    "contact-cta": {
+      "type": "skystar-contact-cta",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "skystar-testimonials",
+      "settings": {}
+    },
+    "footer": {
+      "type": "skystar-footer"
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header",
+    "hero",
+    "trust-strip",
+    "featured-collections",
+    "popular-packages",
+    "features",
+    "contact-cta",
+    "testimonials",
+    "footer"
+  ]
+}

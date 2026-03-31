@@ -1,0 +1,416 @@
+{% comment %}
+  Skystar Main Cart Section
+  Note: This theme is designed as catalog-only with WhatsApp lead generation.
+  This cart template is provided for potential future e-commerce functionality.
+{% endcomment %}
+
+<section class="skystar-cart-section">
+  <div class="container">
+    {% if cart.item_count > 0 %}
+      <div class="cart-header">
+        <h1>{{ section.settings.cart_heading }}</h1>
+        <p class="cart-item-count">{{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}</p>
+      </div>
+
+      <div class="cart-content">
+        <div class="cart-items">
+          {% for item in cart.items %}
+            <div class="cart-item" data-cart-item data-line-item-key="{{ item.key }}">
+              <div class="cart-item-image">
+                {% if item.image %}
+                  <img src="{{ item.image | img_url: '200x200' }}" alt="{{ item.title }}" loading="lazy">
+                {% else %}
+                  <div class="cart-item-placeholder">No image</div>
+                {% endif %}
+              </div>
+
+              <div class="cart-item-details">
+                <h3 class="cart-item-title">
+                  <a href="{{ item.url }}">{{ item.product.title }}</a>
+                </h3>
+                {% if item.variant.title != 'Default Title' %}
+                  <p class="cart-item-variant">{{ item.variant.title }}</p>
+                {% endif %}
+                <p class="cart-item-price">{{ item.final_price | money }}</p>
+              </div>
+
+              <div class="cart-item-quantity">
+                <label for="quantity-{{ item.key }}">Quantity</label>
+                <input
+                  type="number"
+                  id="quantity-{{ item.key }}"
+                  name="updates[]"
+                  value="{{ item.quantity }}"
+                  min="0"
+                  data-quantity-input
+                >
+              </div>
+
+              <div class="cart-item-total">
+                <p class="cart-item-total-price">{{ item.final_line_price | money }}</p>
+              </div>
+
+              <button
+                type="button"
+                class="cart-item-remove"
+                data-cart-remove
+                data-line-item-key="{{ item.key }}"
+                aria-label="Remove {{ item.title }}"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="cart-summary">
+          <h2>{{ section.settings.summary_heading }}</h2>
+
+          <div class="cart-summary-line">
+            <span>Subtotal</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+
+          {% if cart.cart_level_discount_applications.size > 0 %}
+            {% for discount in cart.cart_level_discount_applications %}
+              <div class="cart-summary-line cart-discount">
+                <span>{{ discount.title }}</span>
+                <span>-{{ discount.total_allocated_amount | money }}</span>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <div class="cart-summary-note">
+            <p>{{ section.settings.shipping_note }}</p>
+          </div>
+
+          <button type="submit" name="checkout" class="cart-checkout-button">
+            {{ section.settings.checkout_button_text }}
+          </button>
+
+          <a href="/collections/all" class="cart-continue-shopping">
+            {{ section.settings.continue_shopping_text }}
+          </a>
+        </div>
+      </div>
+    {% else %}
+      <div class="cart-empty">
+        <div class="cart-empty-icon">
+          <svg width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 2L7.17 4H3C2.45 4 2 4.45 2 5V6C2 6.55 2.45 7 3 7H21C21.55 7 22 6.55 22 6V5C22 4.45 21.55 4 21 4H16.83L15 2H9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 7V20C3 21.1 3.9 22 5 22H19C20.1 22 21 21.1 21 20V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>{{ section.settings.empty_heading }}</h2>
+        <p>{{ section.settings.empty_description }}</p>
+        <a href="/collections/all" class="btn btn-primary">
+          {{ section.settings.browse_button_text }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .skystar-cart-section {
+    padding: 60px 20px;
+    min-height: 60vh;
+  }
+
+  .cart-header {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .cart-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  .cart-item-count {
+    color: var(--color-text-muted, #666);
+    font-size: 1.125rem;
+  }
+
+  .cart-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .cart-item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto auto auto;
+    gap: 20px;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid var(--color-border, #e0e0e0);
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .cart-item-image img,
+  .cart-item-placeholder {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  .cart-item-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-background-secondary, #f5f5f5);
+    color: var(--color-text-muted, #999);
+  }
+
+  .cart-item-title {
+    font-size: 1.125rem;
+    margin-bottom: 5px;
+  }
+
+  .cart-item-title a {
+    color: var(--color-text-dark, #1a1a1a);
+    text-decoration: none;
+  }
+
+  .cart-item-title a:hover {
+    color: var(--color-primary, #1e3a5f);
+  }
+
+  .cart-item-variant {
+    color: var(--color-text-muted, #666);
+    font-size: 0.875rem;
+    margin-bottom: 10px;
+  }
+
+  .cart-item-price {
+    font-weight: 600;
+    color: var(--color-primary, #1e3a5f);
+  }
+
+  .cart-item-quantity input {
+    width: 80px;
+    padding: 8px;
+    border: 1px solid var(--color-border, #e0e0e0);
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  .cart-item-total-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-dark, #1a1a1a);
+  }
+
+  .cart-item-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-error, #d32f2f);
+    padding: 8px;
+    transition: color 0.3s ease;
+  }
+
+  .cart-item-remove:hover {
+    color: var(--color-error-dark, #b71c1c);
+  }
+
+  .cart-summary {
+    padding: 30px;
+    border: 2px solid var(--color-border, #e0e0e0);
+    border-radius: 8px;
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+  }
+
+  .cart-summary h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+
+  .cart-summary-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--color-border, #e0e0e0);
+    font-size: 1.125rem;
+  }
+
+  .cart-summary-line:last-of-type {
+    border-bottom: 2px solid var(--color-border, #e0e0e0);
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  .cart-discount {
+    color: var(--color-success, #388e3c);
+  }
+
+  .cart-summary-note {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: var(--color-background-secondary, #f5f5f5);
+    border-radius: 4px;
+    font-size: 0.875rem;
+    color: var(--color-text-muted, #666);
+  }
+
+  .cart-checkout-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color-primary, #1e3a5f);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .cart-checkout-button:hover {
+    background-color: var(--color-primary-dark, #152b47);
+  }
+
+  .cart-continue-shopping {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: var(--color-primary, #1e3a5f);
+    text-decoration: none;
+  }
+
+  .cart-continue-shopping:hover {
+    text-decoration: underline;
+  }
+
+  .cart-empty {
+    text-align: center;
+    padding: 80px 20px;
+  }
+
+  .cart-empty-icon {
+    color: var(--color-text-muted, #999);
+    margin-bottom: 30px;
+  }
+
+  .cart-empty h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  .cart-empty p {
+    color: var(--color-text-muted, #666);
+    margin-bottom: 30px;
+    font-size: 1.125rem;
+  }
+
+  .cart-empty .btn {
+    padding: 15px 40px;
+    background-color: var(--color-primary, #1e3a5f);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+  }
+
+  .cart-empty .btn:hover {
+    background-color: var(--color-primary-dark, #152b47);
+  }
+
+  @media (max-width: 768px) {
+    .cart-content {
+      grid-template-columns: 1fr;
+    }
+
+    .cart-item {
+      grid-template-columns: 80px 1fr;
+      gap: 15px;
+    }
+
+    .cart-item-quantity,
+    .cart-item-total {
+      grid-column: 2;
+    }
+
+    .cart-item-remove {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .cart-summary {
+      position: static;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Main Cart",
+  "settings": [
+    {
+      "type": "text",
+      "id": "cart_heading",
+      "label": "Cart Heading",
+      "default": "Shopping Cart"
+    },
+    {
+      "type": "text",
+      "id": "summary_heading",
+      "label": "Summary Heading",
+      "default": "Order Summary"
+    },
+    {
+      "type": "text",
+      "id": "shipping_note",
+      "label": "Shipping Note",
+      "default": "Shipping and taxes calculated at checkout"
+    },
+    {
+      "type": "text",
+      "id": "checkout_button_text",
+      "label": "Checkout Button Text",
+      "default": "Proceed to Checkout"
+    },
+    {
+      "type": "text",
+      "id": "continue_shopping_text",
+      "label": "Continue Shopping Text",
+      "default": "Continue Shopping"
+    },
+    {
+      "type": "text",
+      "id": "empty_heading",
+      "label": "Empty Cart Heading",
+      "default": "Your cart is empty"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_description",
+      "label": "Empty Cart Description",
+      "default": "Looks like you haven't added any tour packages yet. Start exploring our destinations!"
+    },
+    {
+      "type": "text",
+      "id": "browse_button_text",
+      "label": "Browse Button Text",
+      "default": "Browse Tour Packages"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "header": {
+      "type": "skystar-header"
+    },
+    "main": {
+      "type": "main-search",
+      "settings": {}
+    },
+    "footer": {
+      "type": "skystar-footer"
+    }
+  },
+  "order": [
+    "header",
+    "main",
+    "footer"
+  ]
+}

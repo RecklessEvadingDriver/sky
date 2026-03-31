@@ -14,6 +14,8 @@ This guide will help you install and configure the Skystar Tour and Travels Shop
 4. **Missing JavaScript Configuration** - Added `window.skystarConfig` initialization in `theme.liquid`
 5. **Unconfigured Collections** - Added default collection handles (`domestic-tours`, `international-tours`, `honeymoon-packages`, `popular-packages`)
 6. **Missing Default Settings** - Populated contact phone, email, address, and social media placeholders
+7. **Missing Standard Templates** - Added all required Shopify templates (404, cart, search, password, gift cards, etc.)
+8. **Missing Localization** - Added English translations file for internationalization support
 
 ## Installation Steps
 
@@ -210,7 +212,21 @@ For issues or questions:
 
 ## Updates in Latest Version
 
-**Version 2.1** (Current)
+**Version 2.2** (Current)
+- ✅ Added all missing standard Shopify templates
+- ✅ Added 404 error page with search functionality
+- ✅ Added shopping cart template (for future e-commerce)
+- ✅ Added generic page template for content pages
+- ✅ Added search template with comprehensive results
+- ✅ Added password page for store protection
+- ✅ Added gift card template with QR code
+- ✅ Added collections listing page
+- ✅ Added robots.txt for SEO
+- ✅ Added English localization file
+- ✅ Created .shopifyignore for clean uploads
+- ✅ All templates follow Skystar design patterns
+
+**Version 2.1**
 - ✅ Added missing `product-recommendations.liquid` section
 - ✅ Removed duplicate CSS and font loading
 - ✅ Added JavaScript configuration initialization

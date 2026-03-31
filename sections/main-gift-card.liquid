@@ -1,0 +1,327 @@
+{% comment %}
+  Skystar Gift Card Section
+  Displays gift card with QR code and redemption details
+{% endcomment %}
+
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ 'gift_cards.issued.title' | t }} - {{ shop.name }}</title>
+  <meta name="description" content="{{ 'gift_cards.issued.subtext' | t }}">
+
+  {{ content_for_header }}
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .gift-card-wrapper {
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .gift-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+    }
+
+    .gift-card-header {
+      background: linear-gradient(135deg, #1e3a5f 0%, #d4a574 100%);
+      padding: 40px;
+      text-align: center;
+      color: white;
+    }
+
+    .gift-card-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .gift-card-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .gift-card-amount {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .gift-card-balance {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .gift-card-body {
+      padding: 40px;
+    }
+
+    .gift-card-code-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .gift-card-code-label {
+      font-size: 0.875rem;
+      color: #666;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .gift-card-code {
+      font-size: 1.5rem;
+      font-weight: 700;
+      font-family: 'Courier New', monospace;
+      color: #1e3a5f;
+      background: #f5f5f5;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      letter-spacing: 2px;
+    }
+
+    .gift-card-copy-button {
+      padding: 12px 30px;
+      background-color: #1e3a5f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .gift-card-copy-button:hover {
+      background-color: #152b47;
+    }
+
+    .gift-card-copy-success {
+      display: none;
+      color: #388e3c;
+      margin-top: 10px;
+      font-size: 0.875rem;
+    }
+
+    .gift-card-qr {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 30px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .gift-card-qr-image {
+      max-width: 200px;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .gift-card-qr-label {
+      font-size: 0.875rem;
+      color: #666;
+      margin-top: 15px;
+    }
+
+    .gift-card-instructions {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .gift-card-instructions h3 {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: #1a1a1a;
+    }
+
+    .gift-card-instructions ol {
+      padding-left: 20px;
+    }
+
+    .gift-card-instructions li {
+      margin-bottom: 8px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .gift-card-expires {
+      text-align: center;
+      color: #666;
+      font-size: 0.875rem;
+      padding: 20px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .gift-card-footer {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .gift-card-shop-button {
+      display: inline-block;
+      padding: 15px 40px;
+      background-color: #d4a574;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .gift-card-shop-button:hover {
+      background-color: #c08d5c;
+    }
+
+    .gift-card-print-button {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 12px 30px;
+      background-color: transparent;
+      color: #1e3a5f;
+      text-decoration: none;
+      border: 2px solid #1e3a5f;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .gift-card-print-button:hover {
+      background-color: #1e3a5f;
+      color: white;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .gift-card-footer {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gift-card-title {
+        font-size: 1.5rem;
+      }
+
+      .gift-card-amount {
+        font-size: 2.5rem;
+      }
+
+      .gift-card-code {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="gift-card-wrapper">
+    <div class="gift-card">
+      <div class="gift-card-header">
+        <div class="gift-card-logo">{{ shop.name }}</div>
+        <h1 class="gift-card-title">Gift Card</h1>
+        <div class="gift-card-amount">
+          {% if gift_card.balance != gift_card.initial_value %}
+            <span class="gift-card-current-balance">{{ gift_card.balance | money }}</span>
+            <br>
+            <span class="gift-card-balance">Original: {{ gift_card.initial_value | money }}</span>
+          {% else %}
+            {{ gift_card.initial_value | money }}
+          {% endif %}
+        </div>
+        {% if gift_card.balance != gift_card.initial_value %}
+          <p class="gift-card-balance">Remaining Balance</p>
+        {% endif %}
+      </div>
+
+      <div class="gift-card-body">
+        <div class="gift-card-code-section">
+          <p class="gift-card-code-label">Gift Card Code</p>
+          <div class="gift-card-code" id="gift-card-code">
+            {{ gift_card.code | format_code }}
+          </div>
+          <button class="gift-card-copy-button" onclick="copyCode()">
+            Copy Code
+          </button>
+          <p class="gift-card-copy-success" id="copy-success">✓ Code copied!</p>
+        </div>
+
+        {% if gift_card.qr_identifier %}
+          <div class="gift-card-qr">
+            <img
+              src="{{ gift_card.qr_identifier | qr_code }}"
+              alt="Gift card QR code"
+              class="gift-card-qr-image"
+            >
+            <p class="gift-card-qr-label">Scan at checkout</p>
+          </div>
+        {% endif %}
+
+        <div class="gift-card-instructions">
+          <h3>How to Redeem</h3>
+          <ol>
+            <li>Shop for tour packages on our website</li>
+            <li>At checkout, enter this gift card code</li>
+            <li>The balance will be applied to your booking</li>
+            <li>Any remaining balance stays on your gift card</li>
+          </ol>
+        </div>
+
+        {% if gift_card.expires_on %}
+          <div class="gift-card-expires">
+            Expires on {{ gift_card.expires_on | date: '%B %d, %Y' }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="gift-card-footer">
+      <a href="{{ shop.url }}" class="gift-card-shop-button">
+        Start Shopping
+      </a>
+      <br>
+      <button class="gift-card-print-button" onclick="window.print()">
+        Print Gift Card
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function copyCode() {
+      const code = document.getElementById('gift-card-code').innerText;
+      navigator.clipboard.writeText(code.replace(/\s+/g, '')).then(function() {
+        const successMsg = document.getElementById('copy-success');
+        successMsg.style.display = 'block';
+        setTimeout(function() {
+          successMsg.style.display = 'none';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
