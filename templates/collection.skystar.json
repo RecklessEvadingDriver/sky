@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "skystar-collection-page": {
+      "type": "skystar-collection-page",
+      "settings": {
+        "show_section": true,
+        "show_hero": true,
+        "show_filters": true,
+        "products_per_page": 9
+      }
+    }
+  },
+  "order": ["skystar-collection-page"]
+}

@@ -1,0 +1,91 @@
+{% comment %}
+  Section: skystar-trust-strip.liquid
+  A horizontal scrolling / static social-proof strip.
+  Configurable icons and labels.
+{% endcomment %}
+
+{%- if section.settings.show_section -%}
+<section class="skystar-trust-strip" aria-label="Trust indicators">
+  <div class="skystar-trust-strip__inner">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'item' -%}
+          <div class="skystar-trust-strip__item" {{ block.shopify_attributes }}>
+            <span class="skystar-trust-strip__emoji" aria-hidden="true">{{ block.settings.emoji }}</span>
+            <span class="skystar-trust-strip__text">{{ block.settings.text }}</span>
+          </div>
+          {%- unless forloop.last -%}
+            <div class="skystar-trust-strip__divider" aria-hidden="true"></div>
+          {%- endunless -%}
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Trust Strip",
+  "tag": "section",
+  "class": "skystar-trust-strip-wrapper",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show trust strip",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Trust Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "emoji",
+          "label": "Emoji / icon",
+          "default": "✅"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "5000+ Happy Travellers"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Strip",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": { "emoji": "✈️", "text": "5,000+ Happy Travellers" }
+        },
+        {
+          "type": "item",
+          "settings": { "emoji": "🌍", "text": "200+ Destinations" }
+        },
+        {
+          "type": "item",
+          "settings": { "emoji": "🏨", "text": "Verified Hotels" }
+        },
+        {
+          "type": "item",
+          "settings": { "emoji": "💬", "text": "24/7 WhatsApp Support" }
+        },
+        {
+          "type": "item",
+          "settings": { "emoji": "💰", "text": "Best Price Guarantee" }
+        },
+        {
+          "type": "item",
+          "settings": { "emoji": "🔒", "text": "100% Safe Booking" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

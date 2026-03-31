@@ -1,0 +1,355 @@
+{%- comment -%}
+  Section: skystar-header.liquid
+  Production-ready sticky responsive header.
+  Features:
+    • Logo image upload (with text fallback)
+    • Configurable navigation links (up to 8)
+    • Phone number + WhatsApp quick-dial
+    • Sticky on scroll with shadow
+    • Mobile hamburger menu with slide-in drawer
+    • Transparent header option for hero pages
+{%- endcomment -%}
+
+{%- liquid
+  assign wa_phone = settings.whatsapp_number | default: '919999999999'
+  assign wa_header_msg = section.settings.whatsapp_message | default: "Hi Skystar! I'd like to enquire about a tour package."
+-%}
+
+<header
+  class="skystar-header{% if section.settings.transparent_on_home and request.page_type == 'index' %} skystar-header--transparent{% endif %}"
+  id="skystarHeader"
+  role="banner"
+>
+  <div class="skystar-header__inner">
+
+    {%- comment -%}<!-- ── LOGO ── -->{%- endcomment -%}
+    <a href="{{ routes.root_url }}" class="skystar-header__logo-link" aria-label="{{ shop.name }} — Home">
+      {%- if section.settings.logo -%}
+        <img
+          src="{{ section.settings.logo | image_url: height: 60 }}"
+          alt="{{ shop.name }}"
+          width="{{ section.settings.logo.width | times: 60 | divided_by: section.settings.logo.height }}"
+          height="60"
+          loading="eager"
+          fetchpriority="high"
+          class="skystar-header__logo-img"
+        >
+      {%- else -%}
+        <div class="skystar-header__logo-text">
+          <span class="skystar-header__logo-brand">{{ settings.store_name | default: shop.name }}</span>
+          {%- if settings.store_tagline != blank -%}
+            <span class="skystar-header__logo-tagline">{{ settings.store_tagline }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </a>
+
+    {%- comment -%}<!-- ── DESKTOP NAVIGATION ── -->{%- endcomment -%}
+    <nav class="skystar-header__nav" aria-label="Primary navigation">
+      <ul class="skystar-header__nav-list" role="list">
+        {%- for i in (1..8) -%}
+          {%- liquid
+            assign link_text = 'nav_link_' | append: i | append: '_text'
+            assign link_url  = 'nav_link_' | append: i | append: '_url'
+            assign text_val  = section.settings[link_text]
+            assign url_val   = section.settings[link_url]
+          -%}
+          {%- if text_val != blank and url_val != blank -%}
+            <li class="skystar-header__nav-item">
+              <a
+                href="{{ url_val }}"
+                class="skystar-header__nav-link{% if request.path == url_val %} active{% endif %}"
+              >{{ text_val }}</a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    {%- comment -%}<!-- ── HEADER ACTIONS ── -->{%- endcomment -%}
+    <div class="skystar-header__actions">
+      {%- if section.settings.show_phone and section.settings.phone_number != blank -%}
+        <a
+          href="tel:{{ section.settings.phone_number | remove: ' ' | remove: '-' | remove: '(' | remove: ')' }}"
+          class="skystar-header__phone"
+          aria-label="Call us: {{ section.settings.phone_number }}"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+          {{ section.settings.phone_number }}
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.show_whatsapp_btn -%}
+        <a
+          href="https://wa.me/{{ wa_phone }}?text={{ wa_header_msg | url_encode }}"
+          class="skystar-header__wa-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp us"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          {{ section.settings.whatsapp_btn_text | default: 'WhatsApp' }}
+        </a>
+      {%- endif -%}
+
+      {%- comment -%} Mobile hamburger {%- endcomment -%}
+      <button
+        class="skystar-header__hamburger"
+        id="skystarMenuToggle"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="skystarMobileMenu"
+      >
+        <span class="skystar-header__hamburger-bar"></span>
+        <span class="skystar-header__hamburger-bar"></span>
+        <span class="skystar-header__hamburger-bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+{%- comment -%}<!-- ── MOBILE MENU DRAWER ── -->{%- endcomment -%}
+<div
+  class="skystar-mobile-menu"
+  id="skystarMobileMenu"
+  role="dialog"
+  aria-label="Navigation menu"
+  aria-modal="true"
+  aria-hidden="true"
+>
+  <div class="skystar-mobile-menu__backdrop" id="skystarMenuBackdrop"></div>
+  <div class="skystar-mobile-menu__panel">
+    <div class="skystar-mobile-menu__header">
+      <a href="{{ routes.root_url }}" class="skystar-mobile-menu__logo-link">
+        {%- if section.settings.logo -%}
+          <img
+            src="{{ section.settings.logo | image_url: height: 44 }}"
+            alt="{{ shop.name }}"
+            height="44"
+            loading="lazy"
+          >
+        {%- else -%}
+          <span class="skystar-mobile-menu__brand">{{ settings.store_name | default: shop.name }}</span>
+        {%- endif -%}
+      </a>
+      <button
+        class="skystar-mobile-menu__close"
+        id="skystarMenuClose"
+        aria-label="Close navigation menu"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav aria-label="Mobile navigation">
+      <ul class="skystar-mobile-menu__list" role="list">
+        {%- for i in (1..8) -%}
+          {%- liquid
+            assign link_text = 'nav_link_' | append: i | append: '_text'
+            assign link_url  = 'nav_link_' | append: i | append: '_url'
+            assign text_val  = section.settings[link_text]
+            assign url_val   = section.settings[link_url]
+          -%}
+          {%- if text_val != blank and url_val != blank -%}
+            <li>
+              <a
+                href="{{ url_val }}"
+                class="skystar-mobile-menu__link{% if request.path == url_val %} active{% endif %}"
+              >{{ text_val }}</a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="skystar-mobile-menu__footer">
+      {%- if section.settings.phone_number != blank -%}
+        <a
+          href="tel:{{ section.settings.phone_number | remove: ' ' | remove: '-' | remove: '(' | remove: ')' }}"
+          class="skystar-mobile-menu__contact-link"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+          {{ section.settings.phone_number }}
+        </a>
+      {%- endif -%}
+      <a
+        href="https://wa.me/{{ wa_phone }}?text={{ wa_header_msg | url_encode }}"
+        class="skystar-mobile-menu__wa-btn"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "header",
+  "class": "skystar-header-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image",
+      "info": "Recommended: 300×80px PNG with transparent background"
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_on_home",
+      "label": "Transparent header on homepage",
+      "default": false,
+      "info": "Makes header transparent over the hero banner. Header becomes solid on scroll."
+    },
+    {
+      "type": "header",
+      "content": "Navigation Links"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_1_text",
+      "label": "Link 1 text",
+      "default": "Home"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_1_url",
+      "label": "Link 1 URL",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_2_text",
+      "label": "Link 2 text",
+      "default": "Domestic Tours"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_2_url",
+      "label": "Link 2 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_3_text",
+      "label": "Link 3 text",
+      "default": "International Tours"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_3_url",
+      "label": "Link 3 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_4_text",
+      "label": "Link 4 text",
+      "default": "Honeymoon"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_4_url",
+      "label": "Link 4 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_5_text",
+      "label": "Link 5 text",
+      "default": "About Us"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_5_url",
+      "label": "Link 5 URL",
+      "default": "/pages/about"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_6_text",
+      "label": "Link 6 text",
+      "default": "Contact"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_6_url",
+      "label": "Link 6 URL",
+      "default": "/pages/contact"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_7_text",
+      "label": "Link 7 text"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_7_url",
+      "label": "Link 7 URL"
+    },
+    {
+      "type": "text",
+      "id": "nav_link_8_text",
+      "label": "Link 8 text"
+    },
+    {
+      "type": "url",
+      "id": "nav_link_8_url",
+      "label": "Link 8 URL"
+    },
+    {
+      "type": "header",
+      "content": "Contact Actions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "Show phone number",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Phone number (display format)",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp_btn",
+      "label": "Show WhatsApp button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_btn_text",
+      "label": "WhatsApp button text",
+      "default": "WhatsApp Us"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_message",
+      "label": "Pre-filled WhatsApp message",
+      "default": "Hi Skystar! I'd like to enquire about a tour package."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}

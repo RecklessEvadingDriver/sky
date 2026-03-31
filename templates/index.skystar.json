@@ -21,6 +21,19 @@
         "stat3_label": "Years of Experience"
       }
     },
+    "skystar-trust-strip": {
+      "type": "skystar-trust-strip",
+      "blocks": {
+        "t1": { "type": "item", "settings": { "emoji": "✈️", "text": "5,000+ Happy Travellers" } },
+        "t2": { "type": "item", "settings": { "emoji": "🌍", "text": "200+ Destinations" } },
+        "t3": { "type": "item", "settings": { "emoji": "🏨", "text": "Verified Hotels" } },
+        "t4": { "type": "item", "settings": { "emoji": "💬", "text": "24/7 WhatsApp Support" } },
+        "t5": { "type": "item", "settings": { "emoji": "💰", "text": "Best Price Guarantee" } },
+        "t6": { "type": "item", "settings": { "emoji": "🔒", "text": "100% Safe Booking" } }
+      },
+      "blocks_order": ["t1", "t2", "t3", "t4", "t5", "t6"],
+      "settings": { "show_section": true }
+    },
     "skystar-featured-collections": {
       "type": "skystar-featured-collections",
       "blocks": {
@@ -53,6 +66,18 @@
         "title": "Where Would You Like to Go?",
         "subtitle": "Choose from our handpicked destination categories and start planning your dream trip.",
         "view_all_text": "Browse All Packages"
+      }
+    },
+    "skystar-popular-packages": {
+      "type": "skystar-popular-packages",
+      "settings": {
+        "show_section": true,
+        "eyebrow": "Most Booked",
+        "title": "Popular Tour Packages",
+        "subtitle": "Explore our most loved holiday packages — handcrafted for every kind of traveller.",
+        "source": "collection",
+        "products_count": 6,
+        "view_all_text": "View All Packages"
       }
     },
     "skystar-features": {
@@ -99,6 +124,21 @@
         "subtitle": "We make every journey seamless, memorable, and worry-free."
       }
     },
+    "skystar-contact-cta": {
+      "type": "skystar-contact-cta",
+      "settings": {
+        "show_section": true,
+        "eyebrow": "Ready to Explore?",
+        "title": "Let Us Plan Your Perfect Holiday",
+        "subtitle": "Tell us your dream destination and we'll craft a personalised itinerary just for you — completely free!",
+        "note": "⚡ Typical response time: under 15 minutes",
+        "show_whatsapp": true,
+        "whatsapp_btn_text": "Plan My Trip on WhatsApp",
+        "whatsapp_message": "Hi Skystar! I'd like to plan my holiday. Can you help me?",
+        "show_phone": true,
+        "phone_btn_text": "Call Us Now"
+      }
+    },
     "skystar-testimonials": {
       "type": "skystar-testimonials",
       "blocks": {
@@ -141,8 +181,11 @@
   },
   "order": [
     "skystar-hero",
+    "skystar-trust-strip",
     "skystar-featured-collections",
+    "skystar-popular-packages",
     "skystar-features",
+    "skystar-contact-cta",
     "skystar-testimonials"
   ]
 }
