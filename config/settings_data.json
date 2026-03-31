@@ -4,6 +4,15 @@
     "store_tagline": "Your Dream Holiday Awaits",
     "whatsapp_number": "919999999999",
     "whatsapp_float_message": "Hi Skystar Tour and Travels! 👋 I'd like to know more about your tour packages.",
+    "contact_phone": "+91 99999 99999",
+    "contact_email": "info@skystar-tours.com",
+    "contact_address": "123 Travel Street, Tourism District, New Delhi - 110001, India",
+    "contact_hours": "Mon–Sat: 9am – 7pm",
+    "social_facebook": "",
+    "social_instagram": "",
+    "social_twitter": "",
+    "social_youtube": "",
+    "social_linkedin": "",
     "color_primary": "#0a2d6e",
     "color_secondary": "#f5a623",
     "color_text": "#1a1a2e",
@@ -11,7 +20,6 @@
     "font_heading": "Poppins",
     "font_body": "Inter",
     "font_size_base": 16,
-    "contact_hours": "Mon–Sat: 9am – 7pm",
     "meta_description": "Skystar Tour and Travels — premium holiday packages for domestic, international & honeymoon travel. Book via WhatsApp today!",
     "meta_keywords": "tour packages, travel agency, holiday packages, domestic tours, international tours, honeymoon packages, Skystar"
   }

@@ -40,6 +40,7 @@
         "domestic": {
           "type": "collection_card",
           "settings": {
+            "collection": "domestic-tours",
             "custom_title": "Domestic Tours",
             "badge": "Domestic"
           }
@@ -47,6 +48,7 @@
         "international": {
           "type": "collection_card",
           "settings": {
+            "collection": "international-tours",
             "custom_title": "International Tours",
             "badge": "International"
           }
@@ -54,6 +56,7 @@
         "honeymoon": {
           "type": "collection_card",
           "settings": {
+            "collection": "honeymoon-packages",
             "custom_title": "Honeymoon Packages",
             "badge": "Honeymoon"
           }
@@ -76,6 +79,7 @@
         "title": "Popular Tour Packages",
         "subtitle": "Explore our most loved holiday packages — handcrafted for every kind of traveller.",
         "source": "collection",
+        "collection": "popular-packages",
         "products_count": 6,
         "view_all_text": "View All Packages"
       }

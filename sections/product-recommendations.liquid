@@ -1,0 +1,255 @@
+{% comment %}
+  Section: product-recommendations.liquid
+  ─────────────────────────────────────────────────────
+  Purpose: Display recommended tour packages on product pages
+  Uses Shopify's native product recommendations API
+{% endcomment %}
+
+{%- liquid
+  assign heading = section.settings.heading | default: 'You May Also Like'
+  assign products_to_show = section.settings.products_to_show | default: 4
+-%}
+
+<div class="skystar-recommendations" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ products_to_show }}">
+  {%- if recommendations.performed and recommendations.products_count > 0 -%}
+    <div class="skystar-recommendations__inner">
+      <h2 class="skystar-recommendations__heading">{{ heading }}</h2>
+
+      <div class="skystar-recommendations__grid">
+        {%- for product in recommendations.products limit: products_to_show -%}
+          <div class="skystar-package-card">
+            <a href="{{ product.url }}" class="skystar-package-card__link">
+              {%- if product.featured_media -%}
+                <div class="skystar-package-card__image-wrapper">
+                  <img
+                    src="{{ product.featured_media | image_url: width: 400 }}"
+                    srcset="
+                      {{ product.featured_media | image_url: width: 300 }} 300w,
+                      {{ product.featured_media | image_url: width: 400 }} 400w,
+                      {{ product.featured_media | image_url: width: 600 }} 600w
+                    "
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    alt="{{ product.featured_media.alt | default: product.title | escape }}"
+                    loading="lazy"
+                    width="{{ product.featured_media.width }}"
+                    height="{{ product.featured_media.height }}"
+                    class="skystar-package-card__image"
+                  >
+
+                  {%- if product.metafields.tour.duration.value -%}
+                    <div class="skystar-package-card__duration">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
+                      </svg>
+                      {{ product.metafields.tour.duration.value }}
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              <div class="skystar-package-card__content">
+                {%- if product.collections.first -%}
+                  <span class="skystar-package-card__category">{{ product.collections.first.title }}</span>
+                {%- endif -%}
+
+                <h3 class="skystar-package-card__title">{{ product.title }}</h3>
+
+                {%- if product.first_available_variant.price > 0 -%}
+                  <div class="skystar-package-card__price">
+                    <span class="skystar-package-card__price-label">Starting from</span>
+                    <span class="skystar-package-card__price-value">{{ product.first_available_variant.price | money }}</span>
+                  </div>
+                {%- endif -%}
+              </div>
+            </a>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .skystar-recommendations {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+  }
+
+  .skystar-recommendations__heading {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    color: var(--skystar-text-dark, #1a1a2e);
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .skystar-recommendations__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .skystar-recommendations {
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+
+    .skystar-recommendations__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Package card styles (reuse from main theme) */
+  .skystar-package-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .skystar-package-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .skystar-package-card__link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .skystar-package-card__image-wrapper {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+
+  .skystar-package-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .skystar-package-card:hover .skystar-package-card__image {
+    transform: scale(1.05);
+  }
+
+  .skystar-package-card__duration {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--skystar-primary, #0a2d6e);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .skystar-package-card__content {
+    padding: 16px;
+  }
+
+  .skystar-package-card__category {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--skystar-secondary, #f5a623);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .skystar-package-card__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--skystar-text-dark, #1a1a2e);
+    line-height: 1.4;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .skystar-package-card__price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .skystar-package-card__price-label {
+    font-size: 0.7rem;
+    color: var(--skystar-text-mid, #4a5568);
+  }
+
+  .skystar-package-card__price-value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--skystar-primary, #0a2d6e);
+  }
+</style>
+
+<script>
+  (function() {
+    // Fetch and render product recommendations dynamically
+    var container = document.querySelector('.skystar-recommendations');
+    if (!container) return;
+
+    var url = container.getAttribute('data-url');
+    if (!url) return;
+
+    fetch(url)
+      .then(function(response) { return response.text(); })
+      .then(function(html) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(html, 'text/html');
+        var recommendations = doc.querySelector('.skystar-recommendations');
+        if (recommendations) {
+          container.innerHTML = recommendations.innerHTML;
+        }
+      })
+      .catch(function(error) {
+        console.warn('Failed to load product recommendations:', error);
+      });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product Recommendations",
+  "tag": "section",
+  "class": "skystar-product-recommendations-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "You May Also Like"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Number of products to show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Recommendations"
+    }
+  ]
+}
+{% endschema %}
