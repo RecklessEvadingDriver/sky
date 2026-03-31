@@ -33,6 +33,9 @@ with WhatsApp-based lead generation.
 | **Admin Settings** | Colors, typography, WhatsApp number, social links, contact info, SEO, favicon, OG image |
 | **Mobile-first** | Fully responsive — tested down to 320px |
 | **Performance** | Lazy images, deferred JS, priority-loaded hero image |
+| **Complete Templates** | All standard Shopify templates included (404, cart, search, password, gift cards) |
+| **Internationalization** | Translation-ready with English locale file included |
+| **SEO Optimized** | Robots.txt, structured data, meta tags, Open Graph support |
 
 ---
 
@@ -42,7 +45,7 @@ with WhatsApp-based lead generation.
 sky/
 ├── layout/
 │   └── theme.liquid                    ← Main layout (fonts, CSS, JS, header, footer, floating WA)
-├── sections/
+├── sections/ (24 files)
 │   ├── skystar-announcement-bar.liquid ← Top promo bar (dismissible)
 │   ├── skystar-header.liquid           ← Sticky header with mobile menu
 │   ├── skystar-hero.liquid             ← Full-screen hero banner
@@ -55,25 +58,49 @@ sky/
 │   ├── skystar-footer.liquid           ← Full footer
 │   ├── skystar-about-content.liquid    ← About us page content
 │   ├── skystar-collection-page.liquid  ← Collection listing page
-│   └── main-product.liquid             ← Tour package product page
+│   ├── skystar-404.liquid              ← 404 error page content
+│   ├── main-product.liquid             ← Tour package product page
+│   ├── main-cart.liquid                ← Shopping cart section
+│   ├── main-page.liquid                ← Generic page content
+│   ├── main-list-collections.liquid    ← Collections listing grid
+│   ├── main-search.liquid              ← Search results page
+│   ├── main-password-header.liquid     ← Password page header
+│   ├── main-password-content.liquid    ← Password page content
+│   ├── main-password-footer.liquid     ← Password page footer
+│   ├── main-gift-card.liquid           ← Gift card display
+│   └── product-recommendations.liquid  ← Related products section
 ├── snippets/
 │   ├── whatsapp-button.liquid          ← WhatsApp CTA button
 │   ├── tour-card.liquid                ← Tour package card (used in grids)
 │   ├── tour-package-details.liquid     ← Tour metafields display
 │   ├── social-icons.liquid             ← Social media icon set
 │   └── skystar-seo.liquid              ← JSON-LD structured data
-├── templates/
-│   ├── index.skystar.json              ← Homepage template
-│   ├── product.skystar.json            ← Product page template
-│   ├── collection.skystar.json         ← Collection page template
-│   └── page.about.json                 ← About page template
+├── templates/ (13 files)
+│   ├── index.json                      ← Default homepage template
+│   ├── index.skystar.json              ← Skystar homepage template
+│   ├── product.json                    ← Default product template
+│   ├── product.skystar.json            ← Skystar product template
+│   ├── collection.json                 ← Default collection template
+│   ├── collection.skystar.json         ← Skystar collection template
+│   ├── page.json                       ← Generic page template
+│   ├── page.about.json                 ← About page template
+│   ├── 404.json                        ← 404 error page
+│   ├── cart.json                       ← Shopping cart page
+│   ├── search.json                     ← Search results page
+│   ├── list-collections.json           ← All collections page
+│   ├── password.json                   ← Password protection page
+│   ├── gift_card.liquid                ← Gift card page
+│   └── robots.txt.liquid               ← SEO robots.txt
 ├── assets/
-│   ├── skystar-custom.css              ← All styles (2000+ lines, fully documented)
+│   ├── skystar-custom.css              ← All styles (2400+ lines, fully documented)
 │   └── skystar-custom.js               ← All JS (sticky header, mobile menu, counters, lazy load)
-└── config/
-    ├── settings_schema.json            ← Full admin settings schema
-    ├── settings_data.json              ← Default values
-    └── metafield-definitions.yaml      ← Tour metafield setup reference
+├── config/
+│   ├── settings_schema.json            ← Full admin settings schema
+│   ├── settings_data.json              ← Default values
+│   ├── metafield-definitions.yaml      ← Tour metafield setup reference
+│   └── locales/
+│       └── en.default.json             ← English translations
+└── .shopifyignore                      ← Build artifacts exclusion
 \`\`\`
 
 ---
