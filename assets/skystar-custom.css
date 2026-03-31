@@ -1,0 +1,813 @@
+/* ============================================================
+   Skystar Tour and Travels — Custom Stylesheet
+   Dawn Theme Customization
+   ============================================================ */
+
+/* ----- Global Brand Variables ----- */
+:root {
+  --skystar-primary: #0a2d6e;       /* Deep navy blue */
+  --skystar-secondary: #f5a623;     /* Warm golden amber */
+  --skystar-whatsapp: #25D366;      /* WhatsApp green */
+  --skystar-whatsapp-hover: #1da851;
+  --skystar-text-dark: #1a1a2e;
+  --skystar-text-light: #ffffff;
+  --skystar-bg-light: #f8fafc;
+  --skystar-border: #e2e8f0;
+  --skystar-shadow: 0 4px 20px rgba(10, 45, 110, 0.12);
+  --skystar-radius: 12px;
+  --skystar-radius-sm: 8px;
+}
+
+/* ============================================================
+   HIDE ECOMMERCE ELEMENTS — Catalog-only mode
+   ============================================================ */
+.product-form__buttons,
+.product-form .shopify-payment-button,
+.product-form__quantity,
+.quantity,
+.cart-notification,
+#cart-icon-bubble,
+.header__icon--cart,
+.cart-count-bubble,
+[data-section-type="cart-notification"],
+.predictive-search,
+form[action="/cart/add"],
+.product-form__input--quantity {
+  display: none !important;
+}
+
+/* ============================================================
+   WHATSAPP BUTTON
+   ============================================================ */
+.skystar-whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px 24px;
+  background-color: var(--skystar-whatsapp);
+  color: #ffffff !important;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none !important;
+  border-radius: var(--skystar-radius);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35);
+  text-align: center;
+  letter-spacing: 0.3px;
+  margin-top: 16px;
+}
+
+.skystar-whatsapp-btn:hover,
+.skystar-whatsapp-btn:focus {
+  background-color: var(--skystar-whatsapp-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.45);
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+.skystar-whatsapp-btn:active {
+  transform: translateY(0);
+}
+
+.skystar-whatsapp-btn svg {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  fill: #ffffff;
+}
+
+/* ============================================================
+   TOUR PACKAGE DETAILS (Metafields)
+   ============================================================ */
+.tour-package-details {
+  background: var(--skystar-bg-light);
+  border: 1px solid var(--skystar-border);
+  border-radius: var(--skystar-radius);
+  padding: 24px;
+  margin: 24px 0;
+}
+
+.tour-package-details__title {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--skystar-primary);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--skystar-secondary);
+}
+
+.tour-package-details__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .tour-package-details__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tour-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tour-detail-item__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--skystar-primary);
+  opacity: 0.7;
+}
+
+.tour-detail-item__value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--skystar-text-dark);
+}
+
+/* Duration badge */
+.tour-duration-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--skystar-primary);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 30px;
+  margin-bottom: 12px;
+}
+
+/* Inclusions */
+.tour-inclusions {
+  margin: 20px 0;
+}
+
+.tour-inclusions__title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--skystar-primary);
+  margin-bottom: 12px;
+}
+
+.tour-inclusions__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tour-inclusions__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid #a5d6a7;
+}
+
+.tour-inclusions__item svg {
+  width: 13px;
+  height: 13px;
+  fill: #2e7d32;
+  flex-shrink: 0;
+}
+
+/* Itinerary */
+.tour-itinerary {
+  margin: 24px 0;
+}
+
+.tour-itinerary__title {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--skystar-primary);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--skystar-secondary);
+}
+
+.tour-itinerary__content {
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--skystar-text-dark);
+  white-space: pre-line;
+}
+
+/* ============================================================
+   HERO BANNER SECTION
+   ============================================================ */
+.skystar-hero {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--skystar-primary);
+}
+
+@media (max-width: 768px) {
+  .skystar-hero {
+    min-height: 100svh;
+  }
+}
+
+.skystar-hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+.skystar-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 45, 110, 0.78) 0%,
+    rgba(10, 45, 110, 0.45) 60%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  z-index: 1;
+}
+
+.skystar-hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 24px 60px;
+  text-align: center;
+}
+
+.skystar-hero__eyebrow {
+  display: inline-block;
+  background: var(--skystar-secondary);
+  color: var(--skystar-primary);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 6px 18px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+}
+
+.skystar-hero__headline {
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  margin: 0 auto 20px;
+  max-width: 800px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.skystar-hero__subheadline {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 560px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+.skystar-hero__cta-group {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.skystar-hero__cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--skystar-whatsapp);
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 15px 30px;
+  border-radius: var(--skystar-radius);
+  transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+}
+
+.skystar-hero__cta-primary:hover {
+  background: var(--skystar-whatsapp-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
+}
+
+.skystar-hero__cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 14px 28px;
+  border-radius: var(--skystar-radius);
+  border: 2px solid rgba(255,255,255,0.6);
+  transition: background 0.25s, border-color 0.25s, transform 0.15s;
+}
+
+.skystar-hero__cta-secondary:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.skystar-hero__stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 60px;
+  flex-wrap: wrap;
+}
+
+.skystar-hero__stat {
+  text-align: center;
+  color: #ffffff;
+}
+
+.skystar-hero__stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--skystar-secondary);
+  line-height: 1;
+}
+
+.skystar-hero__stat-label {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+/* ============================================================
+   FEATURED COLLECTIONS / DESTINATIONS
+   ============================================================ */
+.skystar-destinations {
+  padding: 80px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.skystar-section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.skystar-section-eyebrow {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--skystar-secondary);
+  margin-bottom: 10px;
+}
+
+.skystar-section-title {
+  font-size: clamp(1.6rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: var(--skystar-primary);
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.skystar-section-subtitle {
+  font-size: 1rem;
+  color: #64748b;
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.skystar-destinations__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .skystar-destinations__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .skystar-destinations__grid {
+    grid-template-columns: 1fr;
+  }
+  .skystar-destinations {
+    padding: 60px 16px;
+  }
+}
+
+.skystar-destination-card {
+  position: relative;
+  border-radius: var(--skystar-radius);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  display: block;
+  text-decoration: none !important;
+  box-shadow: var(--skystar-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skystar-destination-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(10, 45, 110, 0.2);
+}
+
+.skystar-destination-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+}
+
+.skystar-destination-card:hover .skystar-destination-card__img {
+  transform: scale(1.06);
+}
+
+.skystar-destination-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,45,110,0.85) 0%, transparent 55%);
+}
+
+.skystar-destination-card__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 20px;
+  color: #ffffff;
+}
+
+.skystar-destination-card__category {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: var(--skystar-secondary);
+  color: var(--skystar-primary);
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.skystar-destination-card__title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.skystar-destination-card__count {
+  font-size: 0.82rem;
+  opacity: 0.85;
+}
+
+/* ============================================================
+   TRUST / FEATURES SECTION
+   ============================================================ */
+.skystar-features {
+  background: var(--skystar-bg-light);
+  padding: 80px 24px;
+}
+
+.skystar-features__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.skystar-features__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 50px;
+}
+
+@media (max-width: 900px) {
+  .skystar-features__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .skystar-features__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .skystar-features {
+    padding: 60px 16px;
+  }
+}
+
+.skystar-feature-card {
+  background: #ffffff;
+  border-radius: var(--skystar-radius);
+  padding: 28px 20px;
+  text-align: center;
+  border: 1px solid var(--skystar-border);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.skystar-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--skystar-shadow);
+}
+
+.skystar-feature-card__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--skystar-primary), #1a4fa8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.skystar-feature-card__icon svg {
+  width: 26px;
+  height: 26px;
+  fill: #ffffff;
+}
+
+.skystar-feature-card__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--skystar-primary);
+  margin-bottom: 8px;
+}
+
+.skystar-feature-card__description {
+  font-size: 0.82rem;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+.skystar-testimonials {
+  padding: 80px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.skystar-testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 50px;
+}
+
+@media (max-width: 900px) {
+  .skystar-testimonials__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .skystar-testimonials__grid {
+    grid-template-columns: 1fr;
+  }
+  .skystar-testimonials {
+    padding: 60px 16px;
+  }
+}
+
+.skystar-testimonial-card {
+  background: #ffffff;
+  border-radius: var(--skystar-radius);
+  padding: 28px 24px;
+  border: 1px solid var(--skystar-border);
+  box-shadow: var(--skystar-shadow);
+  position: relative;
+}
+
+.skystar-testimonial-card::before {
+  content: '"';
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  font-size: 5rem;
+  font-family: Georgia, serif;
+  color: var(--skystar-primary);
+  opacity: 0.08;
+  line-height: 1;
+}
+
+.skystar-testimonial-card__stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 14px;
+}
+
+.skystar-testimonial-card__stars svg {
+  width: 16px;
+  height: 16px;
+  fill: var(--skystar-secondary);
+}
+
+.skystar-testimonial-card__text {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #4a5568;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.skystar-testimonial-card__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skystar-testimonial-card__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--skystar-primary), #1a4fa8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.skystar-testimonial-card__name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--skystar-text-dark);
+}
+
+.skystar-testimonial-card__location {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+/* ============================================================
+   PRODUCT PAGE — Tour Package Layout
+   ============================================================ */
+.skystar-product-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--skystar-primary);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 5px 14px;
+  border-radius: 30px;
+  margin-bottom: 10px;
+}
+
+.skystar-price-label {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.skystar-price-starting {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-left: 6px;
+  font-weight: 500;
+}
+
+.skystar-contact-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff3e0;
+  border: 1px solid #ffcc80;
+  border-radius: var(--skystar-radius-sm);
+  padding: 10px 16px;
+  margin-top: 16px;
+  font-size: 0.85rem;
+  color: #e65100;
+  font-weight: 600;
+}
+
+.skystar-contact-info svg {
+  width: 16px;
+  height: 16px;
+  fill: #e65100;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   HEADER — Brand Customization
+   ============================================================ */
+.skystar-brand-tagline {
+  font-size: 0.7rem;
+  color: var(--skystar-secondary);
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 6px 0;
+  background: var(--skystar-primary);
+}
+
+/* ============================================================
+   ANNOUNCEMENT BAR
+   ============================================================ */
+.skystar-announcement {
+  background: var(--skystar-primary);
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.skystar-announcement a {
+  color: var(--skystar-secondary);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.skystar-announcement a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+.skystar-section-divider {
+  border: none;
+  border-top: 1px solid var(--skystar-border);
+  margin: 0;
+}
+
+.skystar-view-all-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--skystar-primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border-bottom: 2px solid var(--skystar-secondary);
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.skystar-view-all-link:hover {
+  color: var(--skystar-secondary);
+  border-color: var(--skystar-primary);
+}
+
+/* Mobile: hide cart icon in header */
+@media (max-width: 990px) {
+  .header__icon--cart {
+    display: none !important;
+  }
+}
+
+/* Product image — first image loads eagerly via fetchpriority="high" in Liquid */

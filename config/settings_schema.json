@@ -1,0 +1,39 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Skystar — Dawn Custom",
+    "theme_version": "1.0.0",
+    "theme_author": "Skystar Tour and Travels",
+    "theme_documentation_url": "https://shopify.dev/docs/themes",
+    "theme_support_url": "https://shopify.dev/docs/themes"
+  },
+  {
+    "name": "Skystar — WhatsApp Settings",
+    "settings": [
+      {
+        "type": "text",
+        "id": "whatsapp_number",
+        "label": "WhatsApp phone number",
+        "info": "Enter the full number with country code and no spaces or symbols. Example: 919876543210 (for +91-98765-43210)",
+        "placeholder": "919999999999"
+      }
+    ]
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "text",
+        "id": "store_name",
+        "label": "Store / brand name",
+        "default": "Skystar Tour and Travels"
+      },
+      {
+        "type": "text",
+        "id": "store_tagline",
+        "label": "Brand tagline",
+        "default": "Your Dream Holiday Awaits"
+      }
+    ]
+  }
+]
