@@ -1,0 +1,57 @@
+# Skystar Tour and Travels — Metafield Definitions
+# ===================================================
+# Import these metafield definitions in your Shopify Admin:
+#   Admin → Settings → Custom data → Products
+#
+# Namespace: tour
+# Each metafield stores specific details about a tour package.
+# ===================================================
+
+metafield_definitions:
+  - namespace: tour
+    key: duration
+    name: "Tour Duration"
+    description: "e.g. 5 Days / 4 Nights"
+    type: single_line_text_field
+    owner_type: PRODUCT
+    pin_to_form: true
+
+  - namespace: tour
+    key: price_label
+    name: "Starting Price Label"
+    description: "e.g. Starting from ₹18,999 per person"
+    type: single_line_text_field
+    owner_type: PRODUCT
+    pin_to_form: true
+
+  - namespace: tour
+    key: inclusions
+    name: "Package Inclusions"
+    description: "Comma-separated list. e.g. Hotel, Meals, Flights, Transfers, Sightseeing"
+    type: single_line_text_field
+    owner_type: PRODUCT
+    pin_to_form: true
+
+  - namespace: tour
+    key: group_size
+    name: "Group Size"
+    description: "e.g. 2–15 persons, Min. 2 persons"
+    type: single_line_text_field
+    owner_type: PRODUCT
+    pin_to_form: false
+
+  - namespace: tour
+    key: best_time
+    name: "Best Time to Visit"
+    description: "e.g. October to March, Year-round"
+    type: single_line_text_field
+    owner_type: PRODUCT
+    pin_to_form: false
+
+  - namespace: tour
+    key: itinerary
+    name: "Day-by-Day Itinerary"
+    description: "Multi-line itinerary. Each line represents a day or section."
+    type: multi_line_text_field
+    owner_type: PRODUCT
+    pin_to_form: true

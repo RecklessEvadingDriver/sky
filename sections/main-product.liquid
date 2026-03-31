@@ -1,0 +1,368 @@
+{% comment %}
+  Section: main-product.liquid (Skystar Dawn override)
+  ─────────────────────────────────────────────────────
+  Purpose : Replaces the standard Dawn main-product section for the
+            Skystar Tour and Travels catalog site.
+
+  Key changes vs. Dawn default:
+  • WhatsApp inquiry button replaces Add to Cart / Buy Now
+  • Cart form, quantity selector, and purchase options are hidden
+  • Tour package metafields (duration, inclusions, itinerary) are shown
+  • Layout: media gallery on the left, package info on the right
+  • Mobile-first responsive two-column grid collapses to single column
+
+  To use: In the Shopify Admin → Themes → Edit code,
+          rename this file to sections/main-product.liquid
+          (replacing the existing Dawn file), OR add it and update
+          the product template JSON to reference this section.
+{% endcomment %}
+
+{{ 'skystar-custom.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign product = product
+  assign first_variant = product.selected_or_first_available_variant
+-%}
+
+<section
+  class="skystar-product-page"
+  itemscope
+  itemtype="https://schema.org/Product"
+  data-section-id="{{ section.id }}"
+  data-section-type="product"
+>
+  <div class="skystar-product-page__inner">
+
+    <!-- =================== MEDIA GALLERY =================== -->
+    <div class="skystar-product-gallery">
+      {%- if product.media.size > 0 -%}
+        <div class="skystar-product-gallery__main">
+          {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+          {%- for media in product.media -%}
+            <div
+              class="skystar-product-gallery__item{% if media.id == featured_media.id %} skystar-product-gallery__item--active{% endif %}"
+              id="media-{{ media.id }}"
+            >
+              {%- case media.media_type -%}
+                {%- when 'image' -%}
+                  <img
+                    src="{{ media | image_url: width: 800 }}"
+                    srcset="
+                      {{ media | image_url: width: 400 }} 400w,
+                      {{ media | image_url: width: 600 }} 600w,
+                      {{ media | image_url: width: 800 }} 800w,
+                      {{ media | image_url: width: 1000 }} 1000w
+                    "
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    alt="{{ media.alt | default: product.title | escape }}"
+                    loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                    fetchpriority="{% if forloop.first %}high{% else %}auto{% endif %}"
+                    width="{{ media.width }}"
+                    height="{{ media.height }}"
+                    itemprop="image"
+                    class="skystar-product-gallery__img"
+                  >
+                {%- when 'video' -%}
+                  <video
+                    src="{{ media.sources.first.url }}"
+                    controls
+                    muted
+                    playsinline
+                    class="skystar-product-gallery__img"
+                    style="width:100%;height:100%;object-fit:cover;"
+                  ></video>
+              {%- endcase -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if product.media.size > 1 -%}
+          <div class="skystar-product-gallery__thumbnails" role="list">
+            {%- for media in product.media -%}
+              <button
+                class="skystar-product-gallery__thumb{% if media.id == featured_media.id %} active{% endif %}"
+                data-media-id="{{ media.id }}"
+                aria-label="View image {{ forloop.index }}"
+                role="listitem"
+              >
+                <img
+                  src="{{ media | image_url: width: 120 }}"
+                  alt="{{ media.alt | default: product.title | escape }}"
+                  loading="lazy"
+                  width="80"
+                  height="80"
+                >
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+    <!-- /MEDIA GALLERY -->
+
+    <!-- =================== PRODUCT INFO =================== -->
+    <div class="skystar-product-info">
+
+      {%- comment -%} Breadcrumb category {%- endcomment -%}
+      {%- if product.collections.first -%}
+        <nav class="skystar-product-info__breadcrumb" aria-label="Breadcrumb">
+          <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a>
+          <span aria-hidden="true"> › </span>
+          <span>{{ product.title }}</span>
+        </nav>
+      {%- endif -%}
+
+      {%- comment -%} Tour package badge {%- endcomment -%}
+      <div class="skystar-product-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/>
+        </svg>
+        Tour Package
+      </div>
+
+      {%- comment -%} Product title {%- endcomment -%}
+      <h1 class="skystar-product-info__title" itemprop="name">{{ product.title }}</h1>
+
+      {%- comment -%} Duration badge (from metafield) {%- endcomment -%}
+      {%- assign duration = product.metafields.tour.duration.value -%}
+      {%- if duration -%}
+        <div class="tour-duration-badge" style="margin-bottom: 16px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
+          </svg>
+          {{ duration }}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Starting price {%- endcomment -%}
+      {%- if first_variant.price > 0 -%}
+        <div class="skystar-product-info__price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+          <p class="skystar-price-label">Starting from</p>
+          <span class="skystar-product-info__price-value" itemprop="price" content="{{ first_variant.price | divided_by: 100.0 }}">
+            {{ first_variant.price | money }}
+          </span>
+          <meta itemprop="priceCurrency" content="{{ cart.currency.iso_code }}">
+          <span class="skystar-price-starting">/ person (approx.)</span>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Short description {%- endcomment -%}
+      {%- if product.description != blank -%}
+        <div class="skystar-product-info__description" itemprop="description">
+          {{ product.description }}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Tour Package Details (metafields) {%- endcomment -%}
+      {% render 'tour-package-details', product: product %}
+
+      {%- comment -%} WhatsApp inquiry button {%- endcomment -%}
+      {% render 'whatsapp-button', product: product %}
+
+      {%- comment -%} Contact / response time note {%- endcomment -%}
+      <div class="skystar-contact-info">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+        Our travel experts typically respond within 15 minutes during business hours.
+      </div>
+
+    </div>
+    <!-- /PRODUCT INFO -->
+
+  </div>
+</section>
+
+<!-- =================== THUMBNAIL GALLERY JS =================== -->
+<script>
+(function () {
+  var section = document.querySelector('[data-section-id="{{ section.id }}"]');
+  if (!section) return;
+
+  var thumbs = section.querySelectorAll('.skystar-product-gallery__thumb');
+  var items  = section.querySelectorAll('.skystar-product-gallery__item');
+
+  thumbs.forEach(function (thumb) {
+    thumb.addEventListener('click', function () {
+      var id = this.getAttribute('data-media-id');
+
+      items.forEach(function (item) {
+        item.classList.toggle('skystar-product-gallery__item--active', item.id === 'media-' + id);
+      });
+      thumbs.forEach(function (t) {
+        t.classList.toggle('active', t.getAttribute('data-media-id') === id);
+      });
+    });
+  });
+})();
+</script>
+
+<style>
+  /* ── Product page layout ─────────────────────────── */
+  .skystar-product-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+
+  .skystar-product-page__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .skystar-product-page__inner {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .skystar-product-page {
+      padding: 16px 16px 48px;
+    }
+  }
+
+  /* ── Gallery ───────────────────────────────────────── */
+  .skystar-product-gallery {
+    position: sticky;
+    top: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .skystar-product-gallery {
+      position: static;
+    }
+  }
+
+  .skystar-product-gallery__main {
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f8fafc;
+    aspect-ratio: 4/3;
+    position: relative;
+  }
+
+  .skystar-product-gallery__item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .skystar-product-gallery__item--active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .skystar-product-gallery__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .skystar-product-gallery__thumbnails {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .skystar-product-gallery__thumb {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    cursor: pointer;
+    padding: 0;
+    background: none;
+    transition: border-color 0.2s;
+  }
+
+  .skystar-product-gallery__thumb:hover,
+  .skystar-product-gallery__thumb.active {
+    border-color: #0a2d6e;
+  }
+
+  .skystar-product-gallery__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── Product info ──────────────────────────────────── */
+  .skystar-product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .skystar-product-info__breadcrumb {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 10px;
+  }
+
+  .skystar-product-info__breadcrumb a {
+    color: #0a2d6e;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .skystar-product-info__breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .skystar-product-info__title {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1.25;
+    margin: 8px 0 12px;
+  }
+
+  .skystar-product-info__price {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .skystar-product-info__price-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #0a2d6e;
+    line-height: 1;
+  }
+
+  .skystar-product-info__description {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: #4a5568;
+    margin-bottom: 8px;
+  }
+
+  .skystar-product-info__description p { margin: 0 0 8px; }
+  .skystar-product-info__description ul { padding-left: 20px; }
+</style>
+
+{% schema %}
+{
+  "name": "Skystar Product (Tour Package)",
+  "tag": "section",
+  "class": "skystar-main-product-section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Skystar Product (Tour Package)"
+    }
+  ]
+}
+{% endschema %}

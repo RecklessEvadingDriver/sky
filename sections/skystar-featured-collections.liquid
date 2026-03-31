@@ -1,0 +1,200 @@
+{% comment %}
+  Section: skystar-featured-collections.liquid
+  Displays destination collections (Domestic, International, Honeymoon)
+  as visually rich cards on the homepage.
+{% endcomment %}
+
+{%- if section.settings.show_section -%}
+<section id="destinations" class="skystar-destinations">
+  <div class="skystar-section-header">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="skystar-section-eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.title != blank -%}
+      <h2 class="skystar-section-title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subtitle != blank -%}
+      <p class="skystar-section-subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="skystar-destinations__grid">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'collection_card' -%}
+          {%- liquid
+            assign col = collections[block.settings.collection]
+          -%}
+          {%- if col != blank -%}
+            <a
+              href="{{ col.url }}"
+              class="skystar-destination-card"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.image -%}
+                <img
+                  class="skystar-destination-card__img"
+                  src="{{ block.settings.image | image_url: width: 600 }}"
+                  srcset="
+                    {{ block.settings.image | image_url: width: 400 }} 400w,
+                    {{ block.settings.image | image_url: width: 600 }} 600w,
+                    {{ block.settings.image | image_url: width: 900 }} 900w
+                  "
+                  sizes="(max-width: 580px) 100vw, (max-width: 900px) 50vw, 33vw"
+                  alt="{{ block.settings.image.alt | default: col.title | escape }}"
+                  loading="lazy"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                >
+              {%- elsif col.featured_image -%}
+                <img
+                  class="skystar-destination-card__img"
+                  src="{{ col.featured_image | image_url: width: 600 }}"
+                  srcset="
+                    {{ col.featured_image | image_url: width: 400 }} 400w,
+                    {{ col.featured_image | image_url: width: 600 }} 600w,
+                    {{ col.featured_image | image_url: width: 900 }} 900w
+                  "
+                  sizes="(max-width: 580px) 100vw, (max-width: 900px) 50vw, 33vw"
+                  alt="{{ col.featured_image.alt | default: col.title | escape }}"
+                  loading="lazy"
+                  width="{{ col.featured_image.width }}"
+                  height="{{ col.featured_image.height }}"
+                >
+              {%- else -%}
+                <div class="skystar-destination-card__img" style="background: linear-gradient(135deg, #0a2d6e, #1a4fa8);"></div>
+              {%- endif -%}
+
+              <div class="skystar-destination-card__overlay"></div>
+              <div class="skystar-destination-card__content">
+                {%- if block.settings.badge != blank -%}
+                  <span class="skystar-destination-card__category">{{ block.settings.badge }}</span>
+                {%- endif -%}
+                <h3 class="skystar-destination-card__title">
+                  {{ block.settings.custom_title | default: col.title }}
+                </h3>
+                <p class="skystar-destination-card__count">
+                  {{ col.products_count }} {{ 'packages' | t }} available
+                </p>
+              </div>
+            </a>
+          {%- endif -%}
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if section.settings.view_all_link != blank and section.settings.view_all_text != blank -%}
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="{{ section.settings.view_all_link }}" class="skystar-view-all-link">
+        {{ section.settings.view_all_text }}
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
+        </svg>
+      </a>
+    </div>
+  {%- endif -%}
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Skystar Destinations",
+  "tag": "section",
+  "class": "skystar-destinations-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Explore Our Destinations"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Where Would You Like to Go?"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section subtitle",
+      "default": "Choose from our handpicked destination categories and start planning your dream trip."
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all button text",
+      "default": "Browse All Packages"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_card",
+      "name": "Destination Card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom title (optional)",
+          "info": "Leave blank to use the collection name"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge text (e.g. Domestic, International, Honeymoon)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom card image (optional)",
+          "info": "Overrides the collection featured image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Skystar Destinations",
+      "blocks": [
+        {
+          "type": "collection_card",
+          "settings": {
+            "custom_title": "Domestic Tours",
+            "badge": "Domestic"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "custom_title": "International Tours",
+            "badge": "International"
+          }
+        },
+        {
+          "type": "collection_card",
+          "settings": {
+            "custom_title": "Honeymoon Packages",
+            "badge": "Honeymoon"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,187 @@
+{% comment %}
+  Section: skystar-contact-cta.liquid
+  Lead generation CTA section — prompts users to reach out via WhatsApp or phone.
+{% endcomment %}
+
+{%- if section.settings.show_section -%}
+{%- liquid
+  assign wa_phone = settings.whatsapp_number | default: '919999999999'
+  assign wa_cta_msg = section.settings.whatsapp_message | default: "Hi Skystar! I'd like to plan my holiday. Can you help me?"
+-%}
+
+<section
+  class="skystar-contact-cta"
+  style="background: {% if section.settings.bg_image %}url('{{ section.settings.bg_image | image_url: width: 1600 }}') center/cover no-repeat; {% else %}background-color: {{ section.settings.bg_color }};{% endif %}"
+>
+  {%- if section.settings.bg_image -%}
+    <div class="skystar-contact-cta__overlay" style="background: {{ section.settings.overlay_color }}; opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+  {%- endif -%}
+
+  <div class="skystar-contact-cta__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="skystar-contact-cta__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.title != blank -%}
+      <h2 class="skystar-contact-cta__title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subtitle != blank -%}
+      <p class="skystar-contact-cta__subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+
+    <div class="skystar-contact-cta__buttons">
+      {%- if section.settings.show_whatsapp -%}
+        <a
+          href="https://wa.me/{{ wa_phone }}?text={{ wa_cta_msg | url_encode }}"
+          class="skystar-contact-cta__btn skystar-contact-cta__btn--wa"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          {{ section.settings.whatsapp_btn_text | default: 'Plan My Trip on WhatsApp' }}
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.show_phone and section.settings.phone != blank -%}
+        <a
+          href="tel:{{ section.settings.phone | remove: ' ' | remove: '-' | remove: '+' | prepend: '+' }}"
+          class="skystar-contact-cta__btn skystar-contact-cta__btn--phone"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+          {{ section.settings.phone_btn_text | default: 'Call Us Now' }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.note != blank -%}
+      <p class="skystar-contact-cta__note">{{ section.settings.note }}</p>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Contact CTA",
+  "tag": "section",
+  "class": "skystar-contact-cta-wrapper",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image (optional)"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color (if no image)",
+      "default": "#0a2d6e"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Image overlay color",
+      "default": "#0a2d6e"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity (%)",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Ready to Explore?"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Heading",
+      "default": "Let Us Plan Your Perfect Holiday"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Tell us your dream destination and we'll craft a personalised itinerary just for you — completely free!"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Note below buttons",
+      "default": "⚡ Typical response time: under 15 minutes"
+    },
+    {
+      "type": "header",
+      "content": "WhatsApp Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_whatsapp",
+      "label": "Show WhatsApp button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_btn_text",
+      "label": "Button text",
+      "default": "Plan My Trip on WhatsApp"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_message",
+      "label": "Pre-filled message",
+      "default": "Hi Skystar! I'd like to plan my holiday. Can you help me?"
+    },
+    {
+      "type": "header",
+      "content": "Phone Button"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "Show phone button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone number",
+      "placeholder": "+91 98765 43210"
+    },
+    {
+      "type": "text",
+      "id": "phone_btn_text",
+      "label": "Button text",
+      "default": "Call Us Now"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact CTA"
+    }
+  ]
+}
+{% endschema %}

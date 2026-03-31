@@ -1,0 +1,191 @@
+{
+  "sections": {
+    "skystar-hero": {
+      "type": "skystar-hero",
+      "settings": {
+        "eyebrow": "✈️ Trusted Travel Partner Since 2010",
+        "headline": "Discover the World with Skystar Tour & Travels",
+        "subheadline": "Handcrafted tour packages for every dream destination. Domestic, international & honeymoon specials.",
+        "whatsapp_cta_text": "Plan My Trip on WhatsApp",
+        "whatsapp_message": "Hi Skystar Tour and Travels! I'd like to explore your tour packages. Please help me plan my dream trip! 🌍",
+        "secondary_cta_text": "Explore Packages",
+        "show_stats": true,
+        "stat1_number": 5000,
+        "stat1_suffix": "+",
+        "stat1_label": "Happy Travellers",
+        "stat2_number": 200,
+        "stat2_suffix": "+",
+        "stat2_label": "Destinations",
+        "stat3_number": 15,
+        "stat3_suffix": "+",
+        "stat3_label": "Years of Experience"
+      }
+    },
+    "skystar-trust-strip": {
+      "type": "skystar-trust-strip",
+      "blocks": {
+        "t1": { "type": "item", "settings": { "emoji": "✈️", "text": "5,000+ Happy Travellers" } },
+        "t2": { "type": "item", "settings": { "emoji": "🌍", "text": "200+ Destinations" } },
+        "t3": { "type": "item", "settings": { "emoji": "🏨", "text": "Verified Hotels" } },
+        "t4": { "type": "item", "settings": { "emoji": "💬", "text": "24/7 WhatsApp Support" } },
+        "t5": { "type": "item", "settings": { "emoji": "💰", "text": "Best Price Guarantee" } },
+        "t6": { "type": "item", "settings": { "emoji": "🔒", "text": "100% Safe Booking" } }
+      },
+      "blocks_order": ["t1", "t2", "t3", "t4", "t5", "t6"],
+      "settings": { "show_section": true }
+    },
+    "skystar-featured-collections": {
+      "type": "skystar-featured-collections",
+      "blocks": {
+        "domestic": {
+          "type": "collection_card",
+          "settings": {
+            "custom_title": "Domestic Tours",
+            "badge": "Domestic"
+          }
+        },
+        "international": {
+          "type": "collection_card",
+          "settings": {
+            "custom_title": "International Tours",
+            "badge": "International"
+          }
+        },
+        "honeymoon": {
+          "type": "collection_card",
+          "settings": {
+            "custom_title": "Honeymoon Packages",
+            "badge": "Honeymoon"
+          }
+        }
+      },
+      "block_order": ["domestic", "international", "honeymoon"],
+      "settings": {
+        "show_section": true,
+        "eyebrow": "Explore Our Destinations",
+        "title": "Where Would You Like to Go?",
+        "subtitle": "Choose from our handpicked destination categories and start planning your dream trip.",
+        "view_all_text": "Browse All Packages"
+      }
+    },
+    "skystar-popular-packages": {
+      "type": "skystar-popular-packages",
+      "settings": {
+        "show_section": true,
+        "eyebrow": "Most Booked",
+        "title": "Popular Tour Packages",
+        "subtitle": "Explore our most loved holiday packages — handcrafted for every kind of traveller.",
+        "source": "collection",
+        "products_count": 6,
+        "view_all_text": "View All Packages"
+      }
+    },
+    "skystar-features": {
+      "type": "skystar-features",
+      "blocks": {
+        "support": {
+          "type": "feature_card",
+          "settings": {
+            "icon": "support",
+            "title": "24/7 Customer Support",
+            "description": "Our travel experts are always available to assist you before, during, and after your trip."
+          }
+        },
+        "price": {
+          "type": "feature_card",
+          "settings": {
+            "icon": "price",
+            "title": "Best Price Guarantee",
+            "description": "We match the best prices in the market. If you find it cheaper, we'll beat it."
+          }
+        },
+        "hotel": {
+          "type": "feature_card",
+          "settings": {
+            "icon": "hotel",
+            "title": "Verified Hotels & Resorts",
+            "description": "Every hotel in our packages is personally inspected and guest-reviewed."
+          }
+        },
+        "whatsapp": {
+          "type": "feature_card",
+          "settings": {
+            "icon": "whatsapp",
+            "title": "Easy WhatsApp Booking",
+            "description": "No complicated forms. Just message us on WhatsApp and we'll handle everything."
+          }
+        }
+      },
+      "block_order": ["support", "price", "hotel", "whatsapp"],
+      "settings": {
+        "show_section": true,
+        "eyebrow": "Why Choose Us",
+        "title": "Your Trusted Travel Partner",
+        "subtitle": "We make every journey seamless, memorable, and worry-free."
+      }
+    },
+    "skystar-contact-cta": {
+      "type": "skystar-contact-cta",
+      "settings": {
+        "show_section": true,
+        "eyebrow": "Ready to Explore?",
+        "title": "Let Us Plan Your Perfect Holiday",
+        "subtitle": "Tell us your dream destination and we'll craft a personalised itinerary just for you — completely free!",
+        "note": "⚡ Typical response time: under 15 minutes",
+        "show_whatsapp": true,
+        "whatsapp_btn_text": "Plan My Trip on WhatsApp",
+        "whatsapp_message": "Hi Skystar! I'd like to plan my holiday. Can you help me?",
+        "show_phone": true,
+        "phone_btn_text": "Call Us Now"
+      }
+    },
+    "skystar-testimonials": {
+      "type": "skystar-testimonials",
+      "blocks": {
+        "review1": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Absolutely amazing experience! The team at Skystar planned every detail perfectly. The hotels were wonderful and the local experiences were unforgettable!",
+            "name": "Priya Sharma",
+            "location": "Goa Family Trip"
+          }
+        },
+        "review2": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Our honeymoon in Bali was everything we dreamed of. Skystar took care of all the arrangements and made it so stress-free. Will book again!",
+            "name": "Rahul & Anjali Verma",
+            "location": "Bali Honeymoon Package"
+          }
+        },
+        "review3": {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Best price guarantee is real! I compared many agencies and Skystar gave the best deal for our Manali trip. The WhatsApp support was super convenient.",
+            "name": "Arjun Kapoor",
+            "location": "Manali Adventure Trip"
+          }
+        }
+      },
+      "block_order": ["review1", "review2", "review3"],
+      "settings": {
+        "show_section": true,
+        "eyebrow": "What Our Travellers Say",
+        "title": "Real Stories from Happy Travellers",
+        "subtitle": "Over 5,000 satisfied travellers have trusted Skystar for their dream holidays."
+      }
+    }
+  },
+  "order": [
+    "skystar-hero",
+    "skystar-trust-strip",
+    "skystar-featured-collections",
+    "skystar-popular-packages",
+    "skystar-features",
+    "skystar-contact-cta",
+    "skystar-testimonials"
+  ]
+}

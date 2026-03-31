@@ -1,0 +1,117 @@
+{%- comment -%}
+  Snippet: skystar-seo.liquid
+  Renders JSON-LD structured data for:
+  — Organization (site-wide)
+  — TravelAgency
+  — WebSite with SearchAction
+  — BreadcrumbList (on product and collection pages)
+{%- endcomment -%}
+
+{%- liquid
+  assign wa_phone = settings.whatsapp_number | default: '919999999999'
+  assign store_phone = settings.contact_phone | default: ''
+  assign store_email = settings.contact_email | default: ''
+  assign store_address = settings.contact_address | default: ''
+-%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TravelAgency",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "logo": {% if settings.og_image %}{{ settings.og_image | image_url: width: 300 | prepend: 'https:' | json }}{% else %}""{% endif %},
+  "description": {{ settings.meta_description | default: shop.description | default: 'Skystar Tour and Travels — premium tour packages for domestic, international, and honeymoon travel.' | json }},
+  "telephone": {{ store_phone | json }},
+  "email": {{ store_email | json }},
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": {{ store_address | json }}
+  },
+  "sameAs": [
+    {% assign socials_json = "" %}
+    {%- if settings.social_facebook != blank -%}{{ settings.social_facebook | json }}{%- endif -%}
+    {%- if settings.social_instagram != blank -%}{% unless socials_json == "" %},{% endunless %}{{ settings.social_instagram | json }}{%- endif -%}
+    {%- if settings.social_youtube != blank -%}{% unless socials_json == "" %},{% endunless %}{{ settings.social_youtube | json }}{%- endif -%}
+    {%- if settings.social_twitter != blank -%}{% unless socials_json == "" %},{% endunless %}{{ settings.social_twitter | json }}{%- endif -%}
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "telephone": {{ store_phone | json }},
+    "availableLanguage": "English"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": {{ shop.url | append: '/search?q={search_term_string}' | json }}
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+{%- if request.page_type == 'product' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    }{%- if product.collections.first -%},{
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ product.collections.first.title | json }},
+      "item": {{ shop.url | append: product.collections.first.url | json }}
+    },{
+      "@type": "ListItem",
+      "position": 3,
+      "name": {{ product.title | json }},
+      "item": {{ shop.url | append: product.url | json }}
+    }{%- else -%},{
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ product.title | json }},
+      "item": {{ shop.url | append: product.url | json }}
+    }{%- endif -%}
+  ]
+}
+</script>
+{%- endif -%}
+
+{%- if request.page_type == 'collection' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": {{ shop.url | json }}
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ collection.title | json }},
+      "item": {{ shop.url | append: collection.url | json }}
+    }
+  ]
+}
+</script>
+{%- endif -%}

@@ -1,0 +1,233 @@
+{% comment %}
+  Section: skystar-hero.liquid
+  A high-converting hero banner for the Skystar Tour and Travels homepage.
+  Fully configurable via the Shopify theme editor.
+{% endcomment %}
+
+<section
+  class="skystar-hero"
+  style="{% if section.settings.bg_color != blank and section.settings.image == blank %}background-color: {{ section.settings.bg_color }};{% endif %}"
+>
+  {%- if section.settings.image -%}
+    <img
+      class="skystar-hero__bg"
+      src="{{ section.settings.image | image_url: width: 2000 }}"
+      srcset="
+        {{ section.settings.image | image_url: width: 600 }} 600w,
+        {{ section.settings.image | image_url: width: 900 }} 900w,
+        {{ section.settings.image | image_url: width: 1200 }} 1200w,
+        {{ section.settings.image | image_url: width: 1600 }} 1600w,
+        {{ section.settings.image | image_url: width: 2000 }} 2000w
+      "
+      sizes="100vw"
+      alt="{{ section.settings.image.alt | default: 'Skystar Tour and Travels hero banner' | escape }}"
+      loading="eager"
+      fetchpriority="high"
+      width="{{ section.settings.image.width }}"
+      height="{{ section.settings.image.height }}"
+    >
+  {%- endif -%}
+
+  <div class="skystar-hero__overlay"></div>
+
+  <div class="skystar-hero__content">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="skystar-hero__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+
+    {%- if section.settings.headline != blank -%}
+      <h1 class="skystar-hero__headline">{{ section.settings.headline }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.subheadline != blank -%}
+      <p class="skystar-hero__subheadline">{{ section.settings.subheadline }}</p>
+    {%- endif -%}
+
+    <div class="skystar-hero__cta-group">
+      {%- if section.settings.whatsapp_cta_text != blank -%}
+        {%- liquid
+          assign wa_phone = settings.whatsapp_number | default: '919999999999'
+          assign wa_message = section.settings.whatsapp_message | default: "Hi Skystar Tour and Travels! I'd like to explore your tour packages. Please help me plan my dream trip! 🌍"
+        -%}
+        <a
+          href="https://wa.me/{{ wa_phone }}?text={{ wa_message | url_encode }}"
+          class="skystar-hero__cta-primary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          {{ section.settings.whatsapp_cta_text }}
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.secondary_cta_text != blank and section.settings.secondary_cta_link != blank -%}
+        <a href="{{ section.settings.secondary_cta_link }}" class="skystar-hero__cta-secondary">
+          {{ section.settings.secondary_cta_text }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_stats -%}
+      <div class="skystar-hero__stats">
+        <div class="skystar-hero__stat">
+          <span class="skystar-hero__stat-number" data-counter="{{ section.settings.stat1_number }}" data-suffix="{{ section.settings.stat1_suffix }}">{{ section.settings.stat1_number }}{{ section.settings.stat1_suffix }}</span>
+          <span class="skystar-hero__stat-label">{{ section.settings.stat1_label }}</span>
+        </div>
+        <div class="skystar-hero__stat">
+          <span class="skystar-hero__stat-number" data-counter="{{ section.settings.stat2_number }}" data-suffix="{{ section.settings.stat2_suffix }}">{{ section.settings.stat2_number }}{{ section.settings.stat2_suffix }}</span>
+          <span class="skystar-hero__stat-label">{{ section.settings.stat2_label }}</span>
+        </div>
+        <div class="skystar-hero__stat">
+          <span class="skystar-hero__stat-number" data-counter="{{ section.settings.stat3_number }}" data-suffix="{{ section.settings.stat3_suffix }}">{{ section.settings.stat3_number }}{{ section.settings.stat3_suffix }}</span>
+          <span class="skystar-hero__stat-label">{{ section.settings.stat3_label }}</span>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Skystar Hero Banner",
+  "tag": "section",
+  "class": "skystar-hero-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero background image",
+      "info": "Recommended: 2000×1200px, optimized WebP/JPEG"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fallback background color",
+      "default": "#0a2d6e"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "✈️ Trusted Travel Partner Since 2010"
+    },
+    {
+      "type": "textarea",
+      "id": "headline",
+      "label": "Main headline",
+      "default": "Discover the World with Skystar Tour & Travels"
+    },
+    {
+      "type": "textarea",
+      "id": "subheadline",
+      "label": "Sub-headline",
+      "default": "Handcrafted tour packages for every dream destination. Domestic, international & honeymoon specials."
+    },
+    {
+      "type": "header",
+      "content": "Call-to-Action Buttons"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_cta_text",
+      "label": "WhatsApp button text",
+      "default": "Plan My Trip on WhatsApp"
+    },
+    {
+      "type": "textarea",
+      "id": "whatsapp_message",
+      "label": "Pre-filled WhatsApp message",
+      "default": "Hi Skystar Tour and Travels! I'd like to explore your tour packages. Please help me plan my dream trip! 🌍"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary button text",
+      "default": "Explore Packages"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Stats Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "label": "Show stats bar",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "stat1_number",
+      "label": "Stat 1 — number",
+      "default": 5000
+    },
+    {
+      "type": "text",
+      "id": "stat1_suffix",
+      "label": "Stat 1 — suffix (e.g. +, %, k)",
+      "default": "+"
+    },
+    {
+      "type": "text",
+      "id": "stat1_label",
+      "label": "Stat 1 — label",
+      "default": "Happy Travellers"
+    },
+    {
+      "type": "number",
+      "id": "stat2_number",
+      "label": "Stat 2 — number",
+      "default": 200
+    },
+    {
+      "type": "text",
+      "id": "stat2_suffix",
+      "label": "Stat 2 — suffix",
+      "default": "+"
+    },
+    {
+      "type": "text",
+      "id": "stat2_label",
+      "label": "Stat 2 — label",
+      "default": "Destinations"
+    },
+    {
+      "type": "number",
+      "id": "stat3_number",
+      "label": "Stat 3 — number",
+      "default": 15
+    },
+    {
+      "type": "text",
+      "id": "stat3_suffix",
+      "label": "Stat 3 — suffix",
+      "default": "+"
+    },
+    {
+      "type": "text",
+      "id": "stat3_label",
+      "label": "Stat 3 — label",
+      "default": "Years of Experience"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Skystar Hero Banner"
+    }
+  ]
+}
+{% endschema %}

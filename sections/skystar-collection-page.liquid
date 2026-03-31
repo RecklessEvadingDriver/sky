@@ -1,0 +1,160 @@
+{% comment %}
+  Section: skystar-collection-page.liquid
+  Custom collection page layout for tour packages.
+  Features: hero banner, filter tabs, products grid with tour-card snippet.
+{% endcomment %}
+
+{%- if section.settings.show_section -%}
+<section class="skystar-collection-page">
+
+  {%- comment -%}<!-- ── COLLECTION HERO ── -->{%- endcomment -%}
+  {%- if section.settings.show_hero -%}
+    <div
+      class="skystar-collection-hero"
+      style="{% if collection.image %}background-image: url('{{ collection.image | image_url: width: 1400 }}');{% else %}background-color: {{ section.settings.hero_fallback_color }};{% endif %}"
+    >
+      <div class="skystar-collection-hero__overlay"></div>
+      <div class="skystar-collection-hero__content">
+        <p class="skystar-collection-hero__eyebrow">Tour Packages</p>
+        <h1 class="skystar-collection-hero__title">{{ collection.title }}</h1>
+        {%- if collection.description != blank -%}
+          <p class="skystar-collection-hero__desc">{{ collection.description | strip_html | truncate: 180 }}</p>
+        {%- endif -%}
+        <p class="skystar-collection-hero__count">{{ collection.products_count }} packages available</p>
+      </div>
+    </div>
+  {%- else -%}
+    <div class="skystar-collection-page__heading-wrap">
+      <h1 class="skystar-collection-page__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <p class="skystar-collection-page__desc">{{ collection.description | strip_html }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%}<!-- ── FILTER BAR ── -->{%- endcomment -%}
+  {%- if section.settings.show_filters -%}
+    <div class="skystar-collection-page__filters" role="navigation" aria-label="Filter packages">
+      <div class="skystar-collection-page__filters-inner">
+        <a
+          href="{{ collection.url }}"
+          class="skystar-filter-pill{% if current_tags == blank %} active{% endif %}"
+        >All</a>
+        {%- for tag in collection.all_tags -%}
+          {%- if collection.current_vendor or collection.current_type -%}
+            {{- tag | link_to_tag: tag | replace: '<a', '<a class="skystar-filter-pill"' -}}
+          {%- else -%}
+            {%- if current_tags contains tag -%}
+              <a href="{{ collection.url }}/{{ tag | handle }}" class="skystar-filter-pill active">{{ tag }}</a>
+            {%- else -%}
+              <a href="{{ collection.url }}/{{ tag | handle }}" class="skystar-filter-pill">{{ tag }}</a>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%}<!-- ── PRODUCT GRID ── -->{%- endcomment -%}
+  <div class="skystar-collection-page__body">
+    {%- if collection.products.size > 0 -%}
+      <div class="skystar-collection-page__grid">
+        {%- paginate collection.products by section.settings.products_per_page -%}
+          {%- for product in collection.products -%}
+            {% render 'tour-card', product: product %}
+          {%- endfor -%}
+
+          {%- if paginate.pages > 1 -%}
+            <div class="skystar-pagination" aria-label="Pagination">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="skystar-pagination__btn" aria-label="Previous page">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                  </svg>
+                  Previous
+                </a>
+              {%- endif -%}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" class="skystar-pagination__page">{{ part.title }}</a>
+                {%- else -%}
+                  {%- if part.title == paginate.current_page -%}
+                    <span class="skystar-pagination__page skystar-pagination__page--active" aria-current="page">{{ part.title }}</span>
+                  {%- else -%}
+                    <span class="skystar-pagination__ellipsis">{{ part.title }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="skystar-pagination__btn" aria-label="Next page">
+                  Next
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                  </svg>
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    {%- else -%}
+      <div class="skystar-collection-page__empty">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="opacity:0.2;margin-bottom:16px;">
+          <path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/>
+        </svg>
+        <h2>No packages here yet</h2>
+        <p>We're adding exciting tour packages soon. <a href="{{ routes.root_url }}">Go home</a></p>
+      </div>
+    {%- endif -%}
+  </div>
+
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection Page",
+  "tag": "section",
+  "class": "skystar-collection-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hero",
+      "label": "Show collection hero banner",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "hero_fallback_color",
+      "label": "Hero fallback color (no image)",
+      "default": "#0a2d6e"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show tag filter pills",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "default": 9
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Page"
+    }
+  ]
+}
+{% endschema %}

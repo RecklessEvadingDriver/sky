@@ -1,0 +1,72 @@
+{
+  "sections": {
+    "skystar-about": {
+      "type": "skystar-about-content",
+      "settings": {
+        "show_section": true,
+        "eyebrow": "Our Story",
+        "title": "Why Skystar Tour & Travels?",
+        "show_stats": true,
+        "stat_1_number": "5000+",
+        "stat_1_label": "Happy Travellers",
+        "stat_2_number": "200+",
+        "stat_2_label": "Destinations",
+        "stat_3_number": "15+",
+        "stat_3_label": "Years Experience",
+        "stat_4_number": "4.9★",
+        "stat_4_label": "Average Rating",
+        "cta_text": "Explore Our Packages",
+        "years_badge": "15"
+      },
+      "blocks": {
+        "value-1": {
+          "type": "value",
+          "settings": {
+            "icon": "🤝",
+            "title": "Trusted Partners",
+            "desc": "We work only with verified hotels and tour operators worldwide."
+          }
+        },
+        "value-2": {
+          "type": "value",
+          "settings": {
+            "icon": "💬",
+            "title": "24/7 Support",
+            "desc": "Our travel experts are always available on WhatsApp to help you."
+          }
+        },
+        "value-3": {
+          "type": "value",
+          "settings": {
+            "icon": "💰",
+            "title": "Best Price Guarantee",
+            "desc": "Find it cheaper elsewhere and we'll match it — no questions asked."
+          }
+        },
+        "value-4": {
+          "type": "value",
+          "settings": {
+            "icon": "🗺️",
+            "title": "Custom Itineraries",
+            "desc": "Every trip is tailored to your preferences, group size, and budget."
+          }
+        }
+      },
+      "blocks_order": ["value-1", "value-2", "value-3", "value-4"]
+    },
+    "skystar-contact-cta": {
+      "type": "skystar-contact-cta",
+      "settings": {
+        "show_section": true,
+        "eyebrow": "Get In Touch",
+        "title": "Ready to Plan Your Dream Holiday?",
+        "subtitle": "Talk to our travel experts today and get a free personalised itinerary.",
+        "show_whatsapp": true,
+        "whatsapp_btn_text": "Chat on WhatsApp",
+        "show_phone": true,
+        "phone_btn_text": "Call Us"
+      }
+    }
+  },
+  "order": ["skystar-about", "skystar-contact-cta"]
+}

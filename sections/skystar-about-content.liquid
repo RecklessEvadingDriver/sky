@@ -1,0 +1,258 @@
+{% comment %}
+  Section: skystar-about-content.liquid
+  About Us page — brand story, team highlights, and values.
+{% endcomment %}
+
+{%- if section.settings.show_section -%}
+<section class="skystar-about">
+  <div class="skystar-about__inner">
+
+    {%- comment -%} Main content row {%- endcomment -%}
+    <div class="skystar-about__row">
+      {%- if section.settings.image -%}
+        <div class="skystar-about__image-col">
+          <div class="skystar-about__image-wrap">
+            <img
+              src="{{ section.settings.image | image_url: width: 700 }}"
+              srcset="
+                {{ section.settings.image | image_url: width: 400 }} 400w,
+                {{ section.settings.image | image_url: width: 700 }} 700w
+              "
+              sizes="(max-width: 768px) 100vw, 50vw"
+              alt="{{ section.settings.image.alt | default: 'About Skystar Tour and Travels' | escape }}"
+              loading="lazy"
+              width="{{ section.settings.image.width }}"
+              height="{{ section.settings.image.height }}"
+              class="skystar-about__img"
+            >
+            {%- if section.settings.years_badge != blank -%}
+              <div class="skystar-about__years-badge">
+                <span class="skystar-about__years-number">{{ section.settings.years_badge }}</span>
+                <span class="skystar-about__years-label">Years of<br>Excellence</span>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div class="skystar-about__content-col">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="skystar-section-eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2 class="skystar-about__title">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.content != blank -%}
+          <div class="skystar-about__body">{{ section.settings.content }}</div>
+        {%- endif -%}
+
+        {%- comment -%} Stats row {%- endcomment -%}
+        {%- if section.settings.show_stats -%}
+          <div class="skystar-about__stats">
+            {%- for i in (1..4) -%}
+              {%- liquid
+                assign stat_num   = 'stat_' | append: i | append: '_number'
+                assign stat_label = 'stat_' | append: i | append: '_label'
+                assign num_val    = section.settings[stat_num]
+                assign label_val  = section.settings[stat_label]
+              -%}
+              {%- if num_val != blank and label_val != blank -%}
+                <div class="skystar-about__stat-item">
+                  <span class="skystar-about__stat-number">{{ num_val }}</span>
+                  <span class="skystar-about__stat-label">{{ label_val }}</span>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.cta_text != blank and section.settings.cta_link != blank -%}
+          <a href="{{ section.settings.cta_link }}" class="skystar-about__cta">
+            {{ section.settings.cta_text }}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
+            </svg>
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} Value blocks {%- endcomment -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="skystar-about__values">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'value' -%}
+              <div class="skystar-about__value-item" {{ block.shopify_attributes }}>
+                <div class="skystar-about__value-icon">{{ block.settings.icon }}</div>
+                <h3 class="skystar-about__value-title">{{ block.settings.title }}</h3>
+                <p class="skystar-about__value-desc">{{ block.settings.desc }}</p>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "About Us Content",
+  "tag": "section",
+  "class": "skystar-about-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "About image"
+    },
+    {
+      "type": "text",
+      "id": "years_badge",
+      "label": "Years badge number",
+      "placeholder": "15",
+      "info": "Shows as a floating badge over the image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Our Story"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Heading",
+      "default": "Why Skystar Tour & Travels?"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Body content",
+      "default": "<p>Founded in 2010, Skystar Tour and Travels has helped over 5,000 families experience their dream holidays. We specialise in personalised tour packages — domestic getaways, international adventures, and unforgettable honeymoon retreats.</p><p>Our team of expert travel planners crafts every itinerary with care, ensuring you get the best accommodation, experiences, and support throughout your journey.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "label": "Show stats",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "Stat 1 — number",
+      "default": "5000+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 — label",
+      "default": "Happy Travellers"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "Stat 2 — number",
+      "default": "200+"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 — label",
+      "default": "Destinations"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "Stat 3 — number",
+      "default": "15+"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 — label",
+      "default": "Years Experience"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_number",
+      "label": "Stat 4 — number",
+      "default": "4.9★"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_label",
+      "label": "Stat 4 — label",
+      "default": "Average Rating"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "Explore Our Packages"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Brand Value",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Emoji / icon",
+          "default": "🤝"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Value title",
+          "default": "Trusted Partners"
+        },
+        {
+          "type": "text",
+          "id": "desc",
+          "label": "Value description",
+          "default": "We work with trusted hotels and verified operators globally."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Us Content",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": { "icon": "🤝", "title": "Trusted Partners", "desc": "We work only with verified hotels and tour operators worldwide." }
+        },
+        {
+          "type": "value",
+          "settings": { "icon": "💬", "title": "24/7 Support", "desc": "Our travel experts are always available on WhatsApp to help you." }
+        },
+        {
+          "type": "value",
+          "settings": { "icon": "💰", "title": "Best Price Guarantee", "desc": "We promise the best value — find it cheaper elsewhere and we'll match it." }
+        },
+        {
+          "type": "value",
+          "settings": { "icon": "🗺️", "title": "Custom Itineraries", "desc": "Every trip is tailored to your preferences, group size, and budget." }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,177 @@
+{% comment %}
+  Section: skystar-testimonials.liquid
+  Customer testimonials / reviews section for the homepage.
+{% endcomment %}
+
+{%- if section.settings.show_section -%}
+<section class="skystar-testimonials">
+  <div class="skystar-section-header">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="skystar-section-eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.title != blank -%}
+      <h2 class="skystar-section-title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subtitle != blank -%}
+      <p class="skystar-section-subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+  </div>
+
+  <div class="skystar-testimonials__grid">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'testimonial' -%}
+          <div class="skystar-testimonial-card" {{ block.shopify_attributes }}>
+            <div class="skystar-testimonial-card__stars">
+              {%- assign rating = block.settings.rating | default: 5 -%}
+              {%- for i in (1..5) -%}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                  {%- if i <= rating -%}
+                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                  {%- else -%}
+                    <path fill="#e2e8f0" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                  {%- endif -%}
+                </svg>
+              {%- endfor -%}
+            </div>
+
+            {%- if block.settings.text != blank -%}
+              <p class="skystar-testimonial-card__text">{{ block.settings.text }}</p>
+            {%- endif -%}
+
+            <div class="skystar-testimonial-card__author">
+              <div class="skystar-testimonial-card__avatar">
+                {%- if block.settings.avatar -%}
+                  <img
+                    src="{{ block.settings.avatar | image_url: width: 88 }}"
+                    alt="{{ block.settings.name | escape }}"
+                    loading="lazy"
+                    width="44"
+                    height="44"
+                    style="width:100%;height:100%;object-fit:cover;border-radius:50%;"
+                  >
+                {%- else -%}
+                  {{ block.settings.name | slice: 0, 1 | upcase }}
+                {%- endif -%}
+              </div>
+              <div>
+                <div class="skystar-testimonial-card__name">{{ block.settings.name }}</div>
+                {%- if block.settings.location != blank -%}
+                  <div class="skystar-testimonial-card__location">{{ block.settings.location }}</div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Skystar Testimonials",
+  "tag": "section",
+  "class": "skystar-testimonials-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "What Our Travellers Say"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Real Stories from Happy Travellers"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Section subtitle",
+      "default": "Over 5,000 satisfied travellers have trusted Skystar for their dream holidays."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review text",
+          "default": "Absolutely amazing experience! The team at Skystar planned every detail perfectly. The hotels were great and the itinerary was well-paced."
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Customer photo (optional)"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer name",
+          "default": "Priya Sharma"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location / Tour taken",
+          "default": "Goa Family Trip"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Skystar Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Absolutely amazing experience! The team at Skystar planned every detail perfectly. The hotels were wonderful and the local experiences were unforgettable!",
+            "name": "Priya Sharma",
+            "location": "Goa Family Trip"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Our honeymoon in Bali was everything we dreamed of. Skystar took care of all the arrangements and made it so stress-free. We will definitely book again!",
+            "name": "Rahul & Anjali Verma",
+            "location": "Bali Honeymoon Package"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Best price guarantee is real! I compared many agencies and Skystar gave the best deal for our Manali trip. The WhatsApp support was super convenient.",
+            "name": "Arjun Kapoor",
+            "location": "Manali Adventure Trip"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

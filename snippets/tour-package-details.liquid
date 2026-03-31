@@ -1,0 +1,99 @@
+{%- comment -%}
+  Snippet: tour-package-details.liquid
+  Usage:
+    {% render 'tour-package-details', product: product %}
+
+  Displays structured tour package metafields:
+    - product.metafields.tour.duration       (single_line_text)
+    - product.metafields.tour.inclusions     (list.single_line_text or single_line_text)
+    - product.metafields.tour.itinerary      (multi_line_text)
+    - product.metafields.tour.price_label    (single_line_text, e.g. "Starting from ₹18,999/person")
+    - product.metafields.tour.group_size     (single_line_text)
+    - product.metafields.tour.best_time      (single_line_text)
+{%- endcomment -%}
+
+{%- liquid
+  assign duration    = product.metafields.tour.duration.value
+  assign inclusions  = product.metafields.tour.inclusions.value
+  assign itinerary   = product.metafields.tour.itinerary.value
+  assign price_label = product.metafields.tour.price_label.value
+  assign group_size  = product.metafields.tour.group_size.value
+  assign best_time   = product.metafields.tour.best_time.value
+-%}
+
+{%- if duration or price_label or group_size or best_time -%}
+  <div class="tour-package-details">
+    <h3 class="tour-package-details__title">Package Overview</h3>
+
+    {%- if duration -%}
+      <div class="tour-duration-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
+        </svg>
+        {{ duration }}
+      </div>
+    {%- endif -%}
+
+    <div class="tour-package-details__grid">
+      {%- if price_label -%}
+        <div class="tour-detail-item">
+          <span class="tour-detail-item__label">Starting Price</span>
+          <span class="tour-detail-item__value">{{ price_label }}</span>
+        </div>
+      {%- elsif product.price > 0 -%}
+        <div class="tour-detail-item">
+          <span class="tour-detail-item__label">Starting Price</span>
+          <span class="tour-detail-item__value">{{ product.price | money }}<span class="skystar-price-starting">/ person</span></span>
+        </div>
+      {%- endif -%}
+
+      {%- if duration -%}
+        <div class="tour-detail-item">
+          <span class="tour-detail-item__label">Duration</span>
+          <span class="tour-detail-item__value">{{ duration }}</span>
+        </div>
+      {%- endif -%}
+
+      {%- if group_size -%}
+        <div class="tour-detail-item">
+          <span class="tour-detail-item__label">Group Size</span>
+          <span class="tour-detail-item__value">{{ group_size }}</span>
+        </div>
+      {%- endif -%}
+
+      {%- if best_time -%}
+        <div class="tour-detail-item">
+          <span class="tour-detail-item__label">Best Time to Visit</span>
+          <span class="tour-detail-item__value">{{ best_time }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{%- if inclusions != blank -%}
+  <div class="tour-inclusions">
+    <h3 class="tour-inclusions__title">What's Included</h3>
+    <ul class="tour-inclusions__list">
+      {%- assign inclusion_list = inclusions | split: ',' -%}
+      {%- for item in inclusion_list -%}
+        {%- assign trimmed = item | strip -%}
+        {%- if trimmed != blank -%}
+          <li class="tour-inclusions__item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            </svg>
+            {{ trimmed }}
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{%- if itinerary != blank -%}
+  <div class="tour-itinerary">
+    <h3 class="tour-itinerary__title">Itinerary</h3>
+    <div class="tour-itinerary__content">{{ itinerary | newline_to_br }}</div>
+  </div>
+{%- endif -%}

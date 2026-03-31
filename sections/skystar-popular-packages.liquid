@@ -1,0 +1,157 @@
+{% comment %}
+  Section: skystar-popular-packages.liquid
+  Shows a configurable grid of featured tour products on the homepage.
+  Supports both collection-based and manually-picked products.
+{% endcomment %}
+
+{%- if section.settings.show_section -%}
+<section class="skystar-popular" id="packages">
+  <div class="skystar-popular__inner">
+    <div class="skystar-section-header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="skystar-section-eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h2 class="skystar-section-title">{{ section.settings.title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        <p class="skystar-section-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- liquid
+      if section.settings.source == 'collection' and section.settings.collection != blank
+        assign pkgs = collections[section.settings.collection].products | slice: 0, section.settings.products_count
+      else
+        assign pkgs = section.blocks
+      endif
+    -%}
+
+    {%- if section.settings.source == 'collection' and section.settings.collection != blank -%}
+      {%- assign col = collections[section.settings.collection] -%}
+      {%- if col.products.size > 0 -%}
+        <div class="skystar-popular__grid">
+          {%- for product in col.products limit: section.settings.products_count -%}
+            {% render 'tour-card', product: product %}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="skystar-popular__empty">No packages found in this collection.</p>
+      {%- endif -%}
+    {%- else -%}
+      {%- comment -%} Manual product blocks {%- endcomment -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="skystar-popular__grid">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'product' -%}
+                {%- if block.settings.product != blank -%}
+                  {%- assign product = all_products[block.settings.product] -%}
+                  {% render 'tour-card', product: product %}
+                {%- endif -%}
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if section.settings.view_all_link != blank and section.settings.view_all_text != blank -%}
+      <div class="skystar-popular__view-all">
+        <a href="{{ section.settings.view_all_link }}" class="skystar-popular__view-all-btn">
+          {{ section.settings.view_all_text }}
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z"/>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Popular Packages",
+  "tag": "section",
+  "class": "skystar-popular-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Most Booked"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Popular Tour Packages"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Explore our most loved holiday packages — handcrafted for every kind of traveller."
+    },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Package source",
+      "options": [
+        { "value": "collection", "label": "From a collection" },
+        { "value": "manual", "label": "Manual selection" }
+      ],
+      "default": "collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection (if source = collection)"
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "Number of packages to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all button text",
+      "default": "View All Packages"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Tour Package",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Tour package"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Popular Packages"
+    }
+  ]
+}
+{% endschema %}
