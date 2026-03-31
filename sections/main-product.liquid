@@ -17,8 +17,6 @@
           the product template JSON to reference this section.
 {% endcomment %}
 
-{{ 'skystar-custom.css' | asset_url | stylesheet_tag }}
-
 {%- liquid
   assign product = product
   assign first_variant = product.selected_or_first_available_variant

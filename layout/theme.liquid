@@ -77,6 +77,13 @@
 
   {%- comment -%} Structured data — Organization {%- endcomment -%}
   {% render 'skystar-seo' %}
+
+  {%- comment -%} Initialize Skystar Configuration {%- endcomment -%}
+  <script>
+    window.skystarConfig = {
+      whatsappNumber: '{{ settings.whatsapp_number | default: "919999999999" }}'
+    };
+  </script>
 </head>
 
 <body class="skystar-body{% if request.page_type == 'index' %} page--home{% endif %}{% if request.page_type == 'product' %} page--product{% endif %}{% if request.page_type == 'collection' %} page--collection{% endif %}">

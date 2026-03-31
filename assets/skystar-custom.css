@@ -3,9 +3,6 @@
    Production-ready CSS for the Shopify Dawn theme
    ============================================================ */
 
-/* ── Google Fonts import (fallback if theme.liquid is bypassed) ── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800;900&display=swap');
-
 /* ── Global Brand Variables ── */
 :root {
   --skystar-primary:          #0a2d6e;
